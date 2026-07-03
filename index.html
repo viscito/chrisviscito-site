@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chris Viscito — Voice Over Artist</title>
+<meta name="description" content="Chris Viscito is a professional voice over artist recording broadcast-ready commercial, narration, e-learning and character work, directed live and delivered same day.">
+<meta property="og:title" content="Chris Viscito — Voice Over Artist">
+<meta property="og:description" content="Professional voice over for commercial, narration, e-learning and character work.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://chrisviscito.com">
+<meta name="theme-color" content="#14171C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2314171C'/%3E%3Ccircle cx='50' cy='40' r='16' fill='none' stroke='%23E7A33E' stroke-width='6'/%3E%3Cline x1='50' y1='56' x2='50' y2='74' stroke='%23E7A33E' stroke-width='6' stroke-linecap='round'/%3E%3Cline x1='36' y1='74' x2='64' y2='74' stroke='%23E7A33E' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================= TOKENS ============================= */
+:root{
+  --ink:#14171C;
+  --panel:#1B2029;
+  --panel-2:#212733;
+  --chalk:#EDEAE2;
+  --fog:#8891A0;
+  --amber:#E7A33E;
+  --rust:#C1502E;
+  --line: rgba(237,234,226,0.10);
+  --line-strong: rgba(237,234,226,0.18);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --mono: 'IBM Plex Mono', 'SF Mono', Consolas, monospace;
+  --container: 1120px;
+}
+
+/* ============================= BASE ============================= */
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+}
+body{
+  margin:0;
+  background:var(--ink);
+  color:var(--chalk);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block;}
+a{color:inherit;}
+h1,h2,h3{font-family:var(--serif);font-weight:600;margin:0;line-height:1.08;letter-spacing:-0.01em;}
+p{margin:0;}
+ul,ol{margin:0;padding:0;list-style:none;}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;}
+input,textarea{font:inherit;color:inherit;}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;}
+
+.container{
+  max-width:var(--container);
+  margin:0 auto;
+  padding:0 24px;
+}
+
+.mono-eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--amber);
+  margin-bottom:14px;
+}
+.mono-eyebrow.center{display:flex;justify-content:center;width:100%;}
+
+.section-title{
+  font-size:clamp(28px,4vw,42px);
+  margin-bottom:8px;
+}
+.section-title.center{text-align:center;}
+.section-head{margin-bottom:48px;}
+.section-head.center{text-align:center;display:flex;flex-direction:column;align-items:center;}
+.section-sub{
+  color:var(--fog);
+  max-width:520px;
+  margin-top:14px;
+  font-size:15.5px;
+}
+.section-head.center .section-sub{margin-left:auto;margin-right:auto;}
+
+section{padding:104px 0;border-top:1px solid var(--line);}
+section:first-of-type{border-top:none;}
+
+/* Buttons */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:14px 26px;
+  border-radius:3px;
+  font-weight:600;
+  font-size:14.5px;
+  letter-spacing:0.01em;
+  text-decoration:none;
+  transition:transform .18s ease, background .18s ease, border-color .18s ease;
+  white-space:nowrap;
+}
+.btn:hover{transform:translateY(-1px);}
+.btn-amber{background:var(--amber);color:var(--ink);}
+.btn-amber:hover{background:#f0b158;}
+.btn-ghost{background:transparent;color:var(--chalk);border:1px solid var(--line-strong);}
+.btn-ghost:hover{border-color:var(--amber);color:var(--amber);}
+
+/* Tally dot */
+.tally{
+  width:9px;height:9px;border-radius:50%;
+  background:var(--rust);
+  box-shadow:0 0 0 3px rgba(193,80,46,0.18);
+  display:inline-block;
+  animation:tally-pulse 2.4s ease-in-out infinite;
+}
+.tally.small{width:7px;height:7px;}
+@keyframes tally-pulse{
+  0%,100%{opacity:1;}
+  50%{opacity:0.35;}
+}
+
+/* ============================= HEADER ============================= */
+.site-header{
+  position:fixed;top:0;left:0;right:0;
+  z-index:100;
+  background:rgba(20,23,28,0.86);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.header-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  height:74px;
+}
+.brand{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--mono);
+  font-size:14px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  text-decoration:none;
+  color:var(--chalk);
+  font-weight:600;
+}
+.nav{display:flex;align-items:center;gap:32px;}
+.nav a{
+  text-decoration:none;
+  font-size:14.5px;
+  color:var(--fog);
+  transition:color .15s ease;
+}
+.nav a:hover{color:var(--chalk);}
+.header-cta{padding:11px 20px;font-size:13.5px;}
+.nav-toggle{
+  display:none;
+  width:32px;height:24px;
+  position:relative;
+}
+.nav-toggle span,.nav-toggle span::before,.nav-toggle span::after{
+  content:'';
+  position:absolute;left:0;right:0;
+  height:2px;background:var(--chalk);
+  transition:transform .2s ease, opacity .2s ease;
+}
+.nav-toggle span{top:11px;}
+.nav-toggle span::before{top:-8px;}
+.nav-toggle span::after{top:8px;}
+.nav-toggle span::before,.nav-toggle span::after{content:'';position:absolute;left:0;right:0;height:2px;background:var(--chalk);}
+.nav-toggle.open span{background:transparent;}
+.nav-toggle.open span::before{transform:translateY(8px) rotate(45deg);}
+.nav-toggle.open span::after{transform:translateY(-8px) rotate(-45deg);}
+
+/* ============================= HERO ============================= */
+.hero{
+  padding:168px 0 96px;
+  border-top:none;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.15fr 0.85fr;
+  gap:64px;
+  align-items:center;
+}
+.hero h1{
+  font-size:clamp(40px,6vw,68px);
+  margin-bottom:22px;
+}
+.hero h1 em{
+  font-style:italic;
+  color:var(--amber);
+}
+.lede{
+  color:var(--fog);
+  font-size:18px;
+  max-width:480px;
+  margin-bottom:34px;
+}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:52px;}
+.hero-stats{
+  display:grid;
+  grid-template-columns:repeat(3,auto);
+  gap:28px;
+  border-top:1px solid var(--line);
+  padding-top:26px;
+}
+.hero-stats dt{
+  font-family:var(--mono);
+  font-size:10.5px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--fog);
+  margin-bottom:6px;
+}
+.hero-stats dd{margin:0;font-size:14px;font-weight:500;}
+
+/* Hero meter panel */
+.hero-meter{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:32px 28px;
+  position:relative;
+  overflow:hidden;
+}
+.meter-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);
+  font-size:11px;letter-spacing:0.14em;
+  color:var(--rust);
+  border:1px solid rgba(193,80,46,0.4);
+  padding:6px 12px;
+  border-radius:3px;
+  margin-bottom:28px;
+}
+.bars{
+  display:flex;
+  align-items:flex-end;
+  gap:5px;
+  height:140px;
+}
+.bars span{
+  flex:1;
+  background:linear-gradient(180deg, var(--amber), rgba(231,163,62,0.25));
+  border-radius:2px 2px 0 0;
+  animation:bar-bounce 1.6s ease-in-out infinite;
+  transform-origin:bottom;
+}
+@keyframes bar-bounce{
+  0%,100%{transform:scaleY(var(--min,0.15));}
+  50%{transform:scaleY(var(--max,1));}
+}
+.meter-foot{
+  display:flex;justify-content:space-between;
+  margin-top:22px;
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--fog);
+  letter-spacing:0.04em;
+}
+
+/* ============================= REEL / DEMOS ============================= */
+.tabs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:36px;
+}
+.tab{
+  padding:10px 18px;
+  border:1px solid var(--line-strong);
+  border-radius:20px;
+  font-size:13.5px;
+  color:var(--fog);
+  transition:all .15s ease;
+}
+.tab:hover{color:var(--chalk);border-color:var(--fog);}
+.tab.active{background:var(--amber);color:var(--ink);border-color:var(--amber);font-weight:600;}
+
+.track-list{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;}
+.track{
+  display:grid;
+  grid-template-columns:auto 1fr auto auto;
+  align-items:center;
+  gap:20px;
+  padding:20px 22px;
+  background:var(--panel);
+}
+.track[hidden]{display:none;}
+.play-btn{
+  width:44px;height:44px;
+  border-radius:50%;
+  background:var(--panel-2);
+  border:1px solid var(--line-strong);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  transition:background .15s ease, border-color .15s ease;
+  position:relative;
+}
+.play-btn:hover{border-color:var(--amber);}
+.play-btn svg{width:15px;height:15px;fill:var(--chalk);}
+.play-btn .icon-pause{display:none;}
+.track.is-playing .play-btn{background:var(--amber);border-color:var(--amber);}
+.track.is-playing .play-btn svg{fill:var(--ink);}
+.track.is-playing .icon-play{display:none;}
+.track.is-playing .icon-pause{display:block;}
+.track.is-missing .play-btn{opacity:0.4;cursor:not-allowed;}
+
+.track-main{min-width:0;}
+.track-title{font-weight:600;font-size:15.5px;margin-bottom:3px;}
+.track-cat{font-family:var(--mono);font-size:11px;color:var(--fog);text-transform:uppercase;letter-spacing:0.06em;}
+.track-missing-note{font-family:var(--mono);font-size:11px;color:var(--rust);margin-top:4px;display:none;}
+.track.is-missing .track-missing-note{display:block;}
+
+.waveform{
+  display:flex;align-items:center;gap:2px;
+  height:32px;
+  width:100%;
+  max-width:280px;
+  cursor:pointer;
+}
+.waveform span{
+  flex:1;
+  min-width:2px;
+  background:var(--line-strong);
+  border-radius:1px;
+  height:20%;
+  transition:background .15s ease;
+}
+.track.is-playing .waveform span{background:var(--amber);}
+
+.track-time{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--fog);
+  white-space:nowrap;
+  min-width:76px;
+  text-align:right;
+}
+
+/* ============================= ABOUT ============================= */
+.about-grid{
+  display:grid;
+  grid-template-columns:0.85fr 1.15fr;
+  gap:64px;
+  align-items:start;
+}
+.portrait-frame{
+  border:1px solid var(--line-strong);
+  border-radius:6px;
+  aspect-ratio:4/5;
+  overflow:hidden;
+  background:var(--panel);
+}
+.portrait-placeholder{
+  height:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:6px;
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--fog);
+  text-align:center;
+  letter-spacing:0.04em;
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(237,234,226,0.03) 10px, rgba(237,234,226,0.03) 20px);
+}
+.portrait-placeholder span{opacity:0.6;font-size:11px;}
+.about-copy p{color:var(--fog);margin-bottom:18px;font-size:15.5px;}
+.about-copy p:last-of-type{margin-bottom:30px;}
+.spec-sheet{
+  border-top:1px solid var(--line);
+}
+.spec-sheet li{
+  display:flex;justify-content:space-between;gap:20px;
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+  font-size:13.5px;
+}
+.spec-sheet li span:first-child{
+  font-family:var(--mono);
+  color:var(--fog);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  padding-top:2px;
+}
+.spec-sheet li span:last-child{text-align:right;font-weight:500;}
+
+/* ============================= SERVICES ============================= */
+.service-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+  border-radius:6px;
+  overflow:hidden;
+}
+.service-card{
+  background:var(--panel);
+  padding:32px 28px;
+}
+.service-card h3{
+  font-size:19px;
+  margin-bottom:10px;
+  font-weight:600;
+}
+.service-card p{
+  color:var(--fog);
+  font-size:14.5px;
+}
+.service-num{
+  font-family:var(--mono);
+  color:var(--amber);
+  font-size:12px;
+  letter-spacing:0.08em;
+  display:block;
+  margin-bottom:16px;
+}
+
+/* ============================= PROCESS ============================= */
+.process-steps{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:40px;
+}
+.process-step{position:relative;padding-top:8px;}
+.process-step-num{
+  font-family:var(--serif);
+  font-size:15px;
+  color:var(--amber);
+  display:block;
+  margin-bottom:18px;
+  font-weight:600;
+}
+.process-step h3{font-size:19px;margin-bottom:10px;}
+.process-step p{color:var(--fog);font-size:14.5px;}
+
+/* ============================= CLIENTS ============================= */
+.logo-strip{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+  border-radius:6px;
+  overflow:hidden;
+}
+.logo-box{
+  background:var(--panel);
+  height:88px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--fog);
+  text-align:center;
+  padding:8px;
+}
+
+/* ============================= TESTIMONIALS ============================= */
+.quote-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+.quote-card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:30px 26px;
+}
+.quote-mark{
+  font-family:var(--serif);
+  font-size:40px;
+  color:var(--amber);
+  line-height:1;
+  display:block;
+  margin-bottom:10px;
+}
+.quote-card p{
+  font-size:15px;
+  color:var(--chalk);
+  margin-bottom:20px;
+  font-style:italic;
+}
+.quote-attrib{font-family:var(--mono);font-size:11.5px;color:var(--fog);letter-spacing:0.02em;}
+
+/* ============================= CONTACT ============================= */
+.contact-grid{
+  display:grid;
+  grid-template-columns:0.85fr 1.15fr;
+  gap:64px;
+}
+.contact-copy p{color:var(--fog);font-size:15.5px;margin-bottom:28px;max-width:400px;}
+.contact-meta{border-top:1px solid var(--line);margin-bottom:28px;}
+.contact-meta li{
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+  font-size:14.5px;
+}
+.contact-meta li strong{
+  display:block;
+  font-family:var(--mono);
+  font-size:10.5px;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:var(--fog);
+  margin-bottom:4px;
+  font-weight:500;
+}
+.socials{display:flex;gap:18px;}
+.socials a{
+  font-size:13.5px;
+  text-decoration:none;
+  color:var(--fog);
+  border-bottom:1px solid transparent;
+  transition:color .15s ease, border-color .15s ease;
+}
+.socials a:hover{color:var(--amber);border-color:var(--amber);}
+
+.contact-form{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:36px;
+}
+.form-row{margin-bottom:20px;}
+.form-row label{
+  display:block;
+  font-family:var(--mono);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:var(--fog);
+  margin-bottom:8px;
+}
+.form-row input,.form-row select,.form-row textarea{
+  width:100%;
+  background:var(--ink);
+  border:1px solid var(--line-strong);
+  border-radius:3px;
+  padding:13px 14px;
+  color:var(--chalk);
+  font-size:14.5px;
+  transition:border-color .15s ease;
+}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{
+  border-color:var(--amber);
+  outline:none;
+}
+.form-row textarea{resize:vertical;min-height:100px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-note{
+  font-size:12.5px;
+  color:var(--fog);
+  margin-top:16px;
+}
+.form-status{
+  font-size:13.5px;
+  margin-top:16px;
+  display:none;
+}
+.form-status.show{display:block;}
+.form-status.ok{color:var(--amber);}
+.form-status.err{color:var(--rust);}
+
+/* ============================= FOOTER ============================= */
+.site-footer{padding:36px 0;}
+.footer-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap;
+}
+.footer-inner p{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--fog);
+  flex:1;
+  text-align:center;
+}
+.footer-inner a{
+  font-size:13px;
+  text-decoration:none;
+  color:var(--fog);
+}
+.footer-inner a:hover{color:var(--amber);}
+
+/* ============================= SCROLL REVEAL ============================= */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
+.reveal.in-view{opacity:1;transform:translateY(0);}
+
+/* ============================= RESPONSIVE ============================= */
+@media (max-width:900px){
+  .hero-grid,.about-grid,.contact-grid{grid-template-columns:1fr;}
+  .hero-meter{order:-1;}
+  .service-grid{grid-template-columns:repeat(2,1fr);}
+  .process-steps{grid-template-columns:1fr;gap:32px;}
+  .logo-strip{grid-template-columns:repeat(3,1fr);}
+  .quote-grid{grid-template-columns:1fr;}
+  .two-col{grid-template-columns:1fr;}
+}
+@media (max-width:720px){
+  .nav,.header-cta{display:none;}
+  .nav-toggle{display:block;}
+  .site-header.menu-open .nav{
+    display:flex;flex-direction:column;
+    position:absolute;top:74px;left:0;right:0;
+    background:var(--ink);
+    padding:20px 24px 28px;
+    border-bottom:1px solid var(--line);
+    gap:18px;
+  }
+  .site-header.menu-open .header-cta{
+    display:inline-flex;
+    margin:0 24px 24px;
+  }
+  section{padding:72px 0;}
+  .hero{padding:130px 0 64px;}
+  .service-grid{grid-template-columns:1fr;}
+  .logo-strip{grid-template-columns:repeat(2,1fr);}
+  .track{grid-template-columns:auto 1fr;grid-template-rows:auto auto;}
+  .waveform{grid-column:1/-1;max-width:none;order:3;}
+  .track-time{grid-column:2;justify-self:end;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================= HEADER ============================= -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner container">
+    <a href="#top" class="brand"><span class="tally" aria-hidden="true"></span>Chris&nbsp;Viscito</a>
+    <nav class="nav" id="siteNav">
+      <a href="#reel">Demos</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#clients">Clients</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="#contact" class="btn btn-amber header-cta">Book a session</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span></button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============================= HERO ============================= -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="mono-eyebrow"><span class="tally" aria-hidden="true"></span>On air — voice over artist</p>
+        <h1>Say it once.<br>Make it <em>stick.</em></h1>
+        <p class="lede">Chris Viscito records broadcast-ready commercial, narration, e‑learning and character voice over from a treated home studio — directed live, delivered same day.</p>
+        <div class="hero-actions">
+          <a href="#reel" class="btn btn-amber">Play the reel</a>
+          <a href="#contact" class="btn btn-ghost">Get a quote</a>
+        </div>
+        <dl class="hero-stats">
+          <div><dt>Turnaround</dt><dd>Same‑day, most projects</dd></div>
+          <div><dt>Direction</dt><dd>Source‑Connect · Cleanfeed</dd></div>
+          <div><dt>Delivery</dt><dd>Broadcast WAV · MP3</dd></div>
+        </dl>
+      </div>
+      <div class="hero-meter" aria-hidden="true">
+        <span class="meter-badge"><span class="tally small"></span>ON AIR</span>
+        <div class="bars">
+          <span style="--min:.2;--max:.9;animation-delay:0s"></span>
+          <span style="--min:.15;--max:.6;animation-delay:.1s"></span>
+          <span style="--min:.3;--max:1;animation-delay:.05s"></span>
+          <span style="--min:.1;--max:.5;animation-delay:.2s"></span>
+          <span style="--min:.25;--max:.85;animation-delay:.15s"></span>
+          <span style="--min:.15;--max:.7;animation-delay:.3s"></span>
+          <span style="--min:.3;--max:.95;animation-delay:.08s"></span>
+          <span style="--min:.1;--max:.55;animation-delay:.25s"></span>
+          <span style="--min:.2;--max:.8;animation-delay:.12s"></span>
+          <span style="--min:.15;--max:.65;animation-delay:.22s"></span>
+          <span style="--min:.3;--max:1;animation-delay:.02s"></span>
+          <span style="--min:.1;--max:.45;animation-delay:.28s"></span>
+          <span style="--min:.25;--max:.9;animation-delay:.18s"></span>
+          <span style="--min:.15;--max:.6;animation-delay:.06s"></span>
+          <span style="--min:.3;--max:.85;animation-delay:.24s"></span>
+          <span style="--min:.2;--max:.7;animation-delay:.14s"></span>
+        </div>
+        <p class="meter-foot"><span>LVL −6dB</span><span>48kHz / 24bit</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= DEMO REEL ============================= -->
+  <section class="reel" id="reel">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="mono-eyebrow">Showreel</span>
+        <h2 class="section-title">Hear it before you hire it</h2>
+        <p class="section-sub">Five reels, one voice. Tap a track to play — the meter reacts to the actual audio.</p>
+      </div>
+
+      <div class="tabs" role="tablist" id="tabs">
+        <button class="tab active" data-cat="commercial" role="tab" aria-selected="true">Commercial</button>
+        <button class="tab" data-cat="narration" role="tab" aria-selected="false">Narration</button>
+        <button class="tab" data-cat="character" role="tab" aria-selected="false">Character &amp; Animation</button>
+        <button class="tab" data-cat="elearning" role="tab" aria-selected="false">E‑Learning</button>
+        <button class="tab" data-cat="ivr" role="tab" aria-selected="false">IVR &amp; Telephony</button>
+      </div>
+
+      <div class="track-list" id="trackList">
+
+        <div class="track" data-cat="commercial">
+          <button class="play-btn" aria-label="Play">
+            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+          </button>
+          <div class="track-main">
+            <p class="track-title">National Auto Insurance — :30</p>
+            <p class="track-cat">Commercial · Broadcast</p>
+            <p class="track-missing-note">Add assets/audio/commercial-01.mp3 — see README</p>
+          </div>
+          <div class="waveform" data-role="waveform"></div>
+          <div class="track-time" data-role="time">0:00 / 0:00</div>
+          <audio data-role="audio" src="assets/audio/commercial-01.mp3" preload="none"></audio>
+        </div>
+
+        <div class="track" data-cat="commercial">
+          <button class="play-btn" aria-label="Play">
+            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+          </button>
+          <div class="track-main">
+            <p class="track-title">Streaming App Launch — :15</p>
+            <p class="track-cat">Commercial · Web</p>
+            <p class="track-missing-note">Add assets/audio/commercial-02.mp3 — see README</p>
+          </div>
+          <div class="waveform" data-role="waveform"></div>
+          <div class="track-time" data-role="time">0:00 / 0:00</div>
+          <audio data-role="audio" src="assets/audio/commercial-02.mp3" preload="none"></audio>
+        </div>
+
+        <div class="track" data-cat="narration" hidden>
+          <button class="play-btn" aria-label="Play">
+            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+          </button>
+          <div class="track-main">
+            <p class="track-title">Wilderness Documentary — Series Open</p>
+            <p class="track-cat">Narration · Documentary</p>
+            <p class="track-missing-note">Add assets/audio/narration-01.mp3 — see README</p>
+          </div>
+          <div class="waveform" data-role="waveform"></div>
+          <div class="track-time" data-role="time">0:00 / 0:00</div>
+          <audio data-role="audio" src="assets/audio/narration-01.mp3" preload="none"></audio>
+        </div>
+
+        <div class="track" data-cat="narration" hidden>
+          <button class="play-btn" aria-label="Play">
+            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+          </button>
+          <div class="track-main">
+            <p class="track-title">Corporate Overview — Annual Report</p>
+            <p class="track-cat">Narration · Corporate</p>
+            <p class="track-missing-note">Add assets/audio/narration-02.mp3 — see README</p>
+          </div>
+          <div class="waveform" data-role="waveform"></div>
+          <div class="track-time" data-role="time">0:00 / 0:00</div>
+          <audio data-role="audio" src="assets/audio/narration-02.mp3" preload="none"></audio>
+        </div>
+
+        <div class="track" data-cat="character" hidden>
+          <button class="play-btn" aria-label="Play">
+            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+          </button>
+          <div class="track-main">
+            <p class="track-title">Fantasy RPG — Villain NPC Lines</p>
+            <p class="track-cat">Character · Video Game</p>
+            <p class="track-missing-note">Add assets/audio/character-01.mp3 — see README</p>
+          </div>
+          <div class="waveform" data-role="waveform"></div>
+          <div class="track-time" data-role="time">0:00 / 0:00</div>
+          <audio data-role="audio" src="assets/audio/character-01.mp3" preload="none"></audio>
+        </div>
+
+        <div class="track" data-cat="character" hidden>
+          <button class="play-btn" aria-label="Play">
+            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+          </button>
+          <div class="track-main">
+            <p class="track-title">Kids Animation — Sidekick Character</p>
+            <p class="track-cat">Character · Animation</p>
+            <p class="track-missing-note">Add assets/audio/character-02.mp3 — see README</p>
+          </div>
+          <div class="waveform" data-role="waveform"></div>
+          <div class="track-time" data-role="time">0:00 / 0:00</div>
+          <audio data-role="audio" src="assets/audio/character-02.mp3" preload="none"></audio>
+        </div>
+
+        <div class="track" data-cat="elearning" hidden>
+          <button class="play-btn" aria-label="Play">
+            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+          </button>
+          <div class="track-main">
+            <p class="track-title">New Hire Onboarding — Module 1</p>
+            <p class="track-cat">E‑Learning · Corporate Training</p>
+            <p class="track-missing-note">Add assets/audio/elearning-01.mp3 — see README</p>
+          </div>
+          <div class="waveform" data-role="waveform"></div>
+          <div class="track-time" data-role="time">0:00 / 0:00</div>
+          <audio data-role="audio" src="assets/audio/elearning-01.mp3" preload="none"></audio>
+        </div>
+
+        <div class="track" data-cat="elearning" hidden>
+          <button class="play-btn" aria-label="Play">
+            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+          </button>
+          <div class="track-main">
+            <p class="track-title">Workplace Compliance — Safety Training</p>
+            <p class="track-cat">E‑Learning · Compliance</p>
+            <p class="track-missing-note">Add assets/audio/elearning-02.mp3 — see README</p>
+          </div>
+          <div class="waveform" data-role="waveform"></div>
+          <div class="track-time" data-role="time">0:00 / 0:00</div>
+          <audio data-role="audio" src="assets/audio/elearning-02.mp3" preload="none"></audio>
+        </div>
+
+        <div class="track" data-cat="ivr" hidden>
+          <button class="play-btn" aria-label="Play">
+            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+          </button>
+          <div class="track-main">
+            <p class="track-title">Main Menu Greeting &amp; Queue</p>
+            <p class="track-cat">IVR · Phone System</p>
+            <p class="track-missing-note">Add assets/audio/ivr-01.mp3 — see README</p>
+          </div>
+          <div class="waveform" data-role="waveform"></div>
+          <div class="track-time" data-role="time">0:00 / 0:00</div>
+          <audio data-role="audio" src="assets/audio/ivr-01.mp3" preload="none"></audio>
+        </div>
+
+        <div class="track" data-cat="ivr" hidden>
+          <button class="play-btn" aria-label="Play">
+            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+          </button>
+          <div class="track-main">
+            <p class="track-title">After‑Hours &amp; On‑Hold Message</p>
+            <p class="track-cat">IVR · On‑Hold</p>
+            <p class="track-missing-note">Add assets/audio/ivr-02.mp3 — see README</p>
+          </div>
+          <div class="waveform" data-role="waveform"></div>
+          <div class="track-time" data-role="time">0:00 / 0:00</div>
+          <audio data-role="audio" src="assets/audio/ivr-02.mp3" preload="none"></audio>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= ABOUT ============================= -->
+  <section class="about" id="about">
+    <div class="container about-grid">
+      <div class="portrait-frame reveal">
+        <!-- Replace this placeholder with: <img src="assets/img/headshot.jpg" alt="Chris Viscito"> -->
+        <div class="portrait-placeholder">
+          Add headshot<br><span>assets/img/headshot.jpg · 4:5 ratio</span>
+        </div>
+      </div>
+      <div class="about-copy reveal">
+        <span class="mono-eyebrow">About</span>
+        <h2 class="section-title">The voice behind the mic</h2>
+        <p>[Replace with your bio] Chris Viscito is a voice over artist with a warm, versatile delivery that moves easily between straight-ahead commercial reads, measured long-form narration, and fully-realized character work. Trained in on-camera and voice acting technique, Chris brings the same attention to intention and pacing that a director would ask for on set — just without the camera.</p>
+        <p>[Replace with training / notable credits] Studied voice acting and script analysis at [studio / program]. Recent work includes [client or project type], [client or project type], and [client or project type]. Comfortable taking live pickups and direction mid-session.</p>
+        <ul class="spec-sheet">
+          <li><span>Microphone</span><span>[Add your mic model]</span></li>
+          <li><span>Interface</span><span>[Add your interface]</span></li>
+          <li><span>Room</span><span>Acoustically treated home studio</span></li>
+          <li><span>Remote direction</span><span>Source‑Connect · Cleanfeed · Zoom</span></li>
+          <li><span>Based in</span><span>[Add city] · works with clients worldwide</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= SERVICES ============================= -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="mono-eyebrow center">Services</span>
+        <h2 class="section-title center">Where the voice goes to work</h2>
+        <p class="section-sub">Every project starts with the script — here's where that script usually lives.</p>
+      </div>
+      <div class="service-grid">
+        <div class="service-card">
+          <span class="service-num">01</span>
+          <h3>Commercial &amp; Broadcast</h3>
+          <p>Radio, TV, and streaming spots that need a read with energy, timing, and a hook.</p>
+        </div>
+        <div class="service-card">
+          <span class="service-num">02</span>
+          <h3>Corporate &amp; E‑Learning</h3>
+          <p>Training modules, internal comms, and compliance courses delivered clearly, at a listenable pace.</p>
+        </div>
+        <div class="service-card">
+          <span class="service-num">03</span>
+          <h3>Explainer &amp; Web Video</h3>
+          <p>Friendly, conversational reads for product demos, onboarding videos, and landing pages.</p>
+        </div>
+        <div class="service-card">
+          <span class="service-num">04</span>
+          <h3>Character &amp; Animation</h3>
+          <p>Distinct, sustainable character voices for games, animation, and interactive media.</p>
+        </div>
+        <div class="service-card">
+          <span class="service-num">05</span>
+          <h3>IVR, On‑Hold &amp; Telephony</h3>
+          <p>Phone trees, hold messaging, and auto-attendant prompts that sound human, not robotic.</p>
+        </div>
+        <div class="service-card">
+          <span class="service-num">06</span>
+          <h3>Audiobook &amp; Long‑Form</h3>
+          <p>Consistent pacing and character differentiation across chapters — sample chapter on request.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= PROCESS ============================= -->
+  <section class="process">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="mono-eyebrow center">Process</span>
+        <h2 class="section-title center">From script to delivery</h2>
+      </div>
+      <ol class="process-steps">
+        <li class="process-step">
+          <span class="process-step-num">01</span>
+          <h3>Send the script</h3>
+          <p>Paste the copy, upload a PDF, or send a brief. You'll get a quote and turnaround estimate within one business day.</p>
+        </li>
+        <li class="process-step">
+          <span class="process-step-num">02</span>
+          <h3>Record &amp; direct</h3>
+          <p>I record from a treated home studio and can take live direction over Source‑Connect, Cleanfeed, or a phone patch.</p>
+        </li>
+        <li class="process-step">
+          <span class="process-step-num">03</span>
+          <h3>Deliver &amp; revise</h3>
+          <p>Broadcast‑ready WAV and MP3 delivered same day for most projects, with a round of revisions included.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================= CLIENTS ============================= -->
+  <section class="clients" id="clients">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="mono-eyebrow center">Trusted by</span>
+      </div>
+      <!-- Replace each box below with an <img src="assets/img/logo-x.svg" alt="Client name"> once you have real client logos -->
+      <div class="logo-strip">
+        <div class="logo-box">Client logo</div>
+        <div class="logo-box">Client logo</div>
+        <div class="logo-box">Client logo</div>
+        <div class="logo-box">Client logo</div>
+        <div class="logo-box">Client logo</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= TESTIMONIALS ============================= -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="mono-eyebrow center">What clients say</span>
+      </div>
+      <!-- Placeholder quotes — replace with real client testimonials before launch -->
+      <div class="quote-grid">
+        <div class="quote-card">
+          <span class="quote-mark">"</span>
+          <p>[Placeholder testimonial] Delivered exactly the tone we asked for, on the first take, and hit our deadline with time to spare.</p>
+          <p class="quote-attrib">— Name, Title · Company (placeholder)</p>
+        </div>
+        <div class="quote-card">
+          <span class="quote-mark">"</span>
+          <p>[Placeholder testimonial] Easy to direct remotely and genuinely fun to work with in session.</p>
+          <p class="quote-attrib">— Name, Title · Company (placeholder)</p>
+        </div>
+        <div class="quote-card">
+          <span class="quote-mark">"</span>
+          <p>[Placeholder testimonial] Our go-to voice for anything that needs to sound trustworthy.</p>
+          <p class="quote-attrib">— Name, Title · Company (placeholder)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= CONTACT ============================= -->
+  <section class="contact" id="contact">
+    <div class="container contact-grid">
+      <div class="contact-copy reveal">
+        <span class="mono-eyebrow">Contact</span>
+        <h2 class="section-title">Let's get it recorded</h2>
+        <p>Send over your script or brief and you'll hear back with a quote and turnaround time within one business day.</p>
+        <ul class="contact-meta">
+          <li><strong>Email</strong>hello@chrisviscito.com <span style="color:var(--fog)">(placeholder — update to your real address)</span></li>
+          <li><strong>Response time</strong>Usually within one business day</li>
+          <li><strong>Availability</strong>Same‑day turnaround on most bookings</li>
+        </ul>
+        <div class="socials">
+          <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="#" target="_blank" rel="noopener">Instagram</a>
+          <a href="#" target="_blank" rel="noopener">Voices.com</a>
+        </div>
+      </div>
+
+      <form class="contact-form reveal" id="contactForm" action="https://formspree.io/f/your-form-id" method="POST">
+        <div class="two-col">
+          <div class="form-row">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-row">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="project">Project type</label>
+          <select id="project" name="project">
+            <option>Commercial</option>
+            <option>Narration</option>
+            <option>Character / Animation</option>
+            <option>E‑Learning</option>
+            <option>IVR / Telephony</option>
+            <option>Audiobook</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="message">Project details</label>
+          <textarea id="message" name="message" required placeholder="Word count, deadline, and a link to the script if you have one."></textarea>
+        </div>
+        <button type="submit" class="btn btn-amber" style="width:100%;justify-content:center;">Send message</button>
+        <p class="form-note">Replace the form's action URL with your own Formspree endpoint (or similar) — see README for setup.</p>
+        <p class="form-status" id="formStatus"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================= FOOTER ============================= -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span class="tally small" aria-hidden="true"></span>
+    <p>© <span id="year"></span> Chris Viscito. All rights reserved.</p>
+    <a href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------- Footer year ----------
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ---------- Mobile nav ----------
+  var navToggle = document.getElementById('navToggle');
+  var siteHeader = document.getElementById('siteHeader');
+  navToggle.addEventListener('click', function(){
+    var open = siteHeader.classList.toggle('menu-open');
+    navToggle.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.getElementById('siteNav').addEventListener('click', function(e){
+    if (e.target.tagName === 'A'){
+      siteHeader.classList.remove('menu-open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // ---------- Demo reel tabs ----------
+  var tabs = document.querySelectorAll('.tab');
+  var tracks = document.querySelectorAll('.track');
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      tabs.forEach(function(t){ t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected','true');
+      var cat = tab.getAttribute('data-cat');
+      tracks.forEach(function(track){
+        var match = track.getAttribute('data-cat') === cat;
+        track.hidden = !match;
+        if (!match) pauseTrack(track);
+      });
+    });
+  });
+
+  // ---------- Audio players ----------
+  var WAVEFORM_BARS = 32;
+  var activeTrack = null;
+  var audioCtx = null;
+
+  function formatTime(sec){
+    if (!isFinite(sec) || isNaN(sec)) return '0:00';
+    var m = Math.floor(sec / 60);
+    var s = Math.floor(sec % 60);
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+
+  function buildWaveform(container){
+    var bars = [];
+    for (var i = 0; i < WAVEFORM_BARS; i++){
+      var bar = document.createElement('span');
+      var idle = 15 + Math.random() * 55; // idle height %
+      bar.style.height = idle + '%';
+      bar.dataset.idle = idle;
+      container.appendChild(bar);
+      bars.push(bar);
+    }
+    return bars;
+  }
+
+  function pauseTrack(track){
+    var audio = track.querySelector('[data-role="audio"]');
+    if (audio && !audio.paused) audio.pause();
+    track.classList.remove('is-playing');
+  }
+
+  function resetBars(bars){
+    bars.forEach(function(bar){
+      bar.style.height = bar.dataset.idle + '%';
+    });
+  }
+
+  tracks.forEach(function(track){
+    var playBtn = track.querySelector('.play-btn');
+    var audio = track.querySelector('[data-role="audio"]');
+    var waveformEl = track.querySelector('[data-role="waveform"]');
+    var timeEl = track.querySelector('[data-role="time"]');
+    var bars = buildWaveform(waveformEl);
+    var raf = null;
+    var analyser, source, dataArray;
+
+    audio.addEventListener('error', function(){
+      track.classList.add('is-missing');
+    });
+
+    audio.addEventListener('loadedmetadata', function(){
+      timeEl.textContent = formatTime(0) + ' / ' + formatTime(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', function(){
+      timeEl.textContent = formatTime(audio.currentTime) + ' / ' + formatTime(audio.duration || 0);
+    });
+
+    audio.addEventListener('ended', function(){
+      track.classList.remove('is-playing');
+      resetBars(bars);
+      cancelAnimationFrame(raf);
+    });
+
+    function setupAnalyser(){
+      if (analyser) return;
+      try{
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        source = audioCtx.createMediaElementSource(audio);
+        analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 64;
+        dataArray = new Uint8Array(analyser.frequencyBinCount);
+        source.connect(analyser);
+        analyser.connect(audioCtx.destination);
+      } catch(e){ analyser = null; }
+    }
+
+    function animateBars(){
+      if (analyser){
+        analyser.getByteFrequencyData(dataArray);
+        for (var i = 0; i < bars.length; i++){
+          var v = dataArray[i % dataArray.length] / 255;
+          bars[i].style.height = Math.max(8, v * 100) + '%';
+        }
+      }
+      raf = requestAnimationFrame(animateBars);
+    }
+
+    playBtn.addEventListener('click', function(){
+      if (track.classList.contains('is-missing')){
+        return; // no audio file yet
+      }
+      if (audio.paused){
+        if (activeTrack && activeTrack !== track) pauseTrackFully(activeTrack);
+        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        setupAnalyser();
+        var playPromise = audio.play();
+        if (playPromise !== undefined){
+          playPromise.then(function(){
+            track.classList.add('is-playing');
+            activeTrack = track;
+            animateBars();
+          }).catch(function(){
+            track.classList.add('is-missing');
+          });
+        }
+      } else {
+        audio.pause();
+        track.classList.remove('is-playing');
+        cancelAnimationFrame(raf);
+        resetBars(bars);
+      }
+    });
+
+    function pauseTrackFully(t){
+      var a = t.querySelector('[data-role="audio"]');
+      if (a) a.pause();
+      t.classList.remove('is-playing');
+    }
+
+    waveformEl.addEventListener('click', function(e){
+      if (!audio.duration || track.classList.contains('is-missing')) return;
+      var rect = waveformEl.getBoundingClientRect();
+      var ratio = (e.clientX - rect.left) / rect.width;
+      audio.currentTime = ratio * audio.duration;
+    });
+  });
+
+  // ---------- Contact form ----------
+  var form = document.getElementById('contactForm');
+  var status = document.getElementById('formStatus');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var actionUrl = form.getAttribute('action');
+    if (!actionUrl || actionUrl.indexOf('your-form-id') !== -1){
+      status.textContent = "Form isn't connected yet — email hello@chrisviscito.com directly, or see the README to connect Formspree.";
+      status.className = 'form-status show err';
+      return;
+    }
+    status.textContent = 'Sending…';
+    status.className = 'form-status show';
+    fetch(actionUrl, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(function(res){
+      if (res.ok){
+        status.textContent = 'Message sent — you\'ll hear back within one business day.';
+        status.className = 'form-status show ok';
+        form.reset();
+      } else {
+        throw new Error('Send failed');
+      }
+    }).catch(function(){
+      status.textContent = "Couldn't send — please email hello@chrisviscito.com directly.";
+      status.className = 'form-status show err';
+    });
+  });
+
+  // ---------- Scroll reveal ----------
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+})();
+</script>
+</body>
+</html>
