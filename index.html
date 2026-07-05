@@ -1089,14 +1089,19 @@ section:first-of-type{border-top:none;}
       </div>
 
       <form class="contact-form reveal" id="contactForm" action="https://formspree.io/f/your-form-id" method="POST">
+        <input type="hidden" name="_subject" value="New inquiry from chrisviscito.com">
+        <div class="form-row" style="position:absolute;left:-9999px;" aria-hidden="true">
+          <label for="company">Company</label>
+          <input type="text" id="company" name="company" tabindex="-1" autocomplete="off">
+        </div>
         <div class="two-col">
           <div class="form-row">
             <label for="name">Name</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name" required aria-required="true">
           </div>
           <div class="form-row">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" required aria-required="true">
           </div>
         </div>
         <div class="form-row">
@@ -1113,11 +1118,11 @@ section:first-of-type{border-top:none;}
         </div>
         <div class="form-row">
           <label for="message">Project details</label>
-          <textarea id="message" name="message" required placeholder="Word count, deadline, and a link to the script if you have one."></textarea>
+          <textarea id="message" name="message" required aria-required="true" placeholder="Word count, deadline, and a link to the script if you have one."></textarea>
         </div>
-        <button type="submit" class="btn btn-amber" style="width:100%;justify-content:center;">Send message</button>
+        <button type="submit" class="btn btn-amber" id="formSubmit" style="width:100%;justify-content:center;">Send message</button>
         <p class="form-note">Replace the form's action URL with your own Formspree endpoint (or similar) — see README for setup.</p>
-        <p class="form-status" id="formStatus"></p>
+        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
       </form>
     </div>
   </section>
@@ -1334,8 +1339,15 @@ section:first-of-type{border-top:none;}
   // ---------- Contact form ----------
   var form = document.getElementById('contactForm');
   var status = document.getElementById('formStatus');
+  var submitBtn = document.getElementById('formSubmit');
   form.addEventListener('submit', function(e){
     e.preventDefault();
+
+    // Honeypot: bots fill every field, humans never see or fill this one.
+    if (form.elements.company && form.elements.company.value){
+      return;
+    }
+
     var actionUrl = form.getAttribute('action');
     if (!actionUrl || actionUrl.indexOf('your-form-id') !== -1){
       status.textContent = "Form isn't connected yet — email hello@chrisviscito.com directly, or see the README to connect Formspree.";
@@ -1344,6 +1356,8 @@ section:first-of-type{border-top:none;}
     }
     status.textContent = 'Sending…';
     status.className = 'form-status show';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
     fetch(actionUrl, {
       method: 'POST',
       body: new FormData(form),
@@ -1359,6 +1373,9 @@ section:first-of-type{border-top:none;}
     }).catch(function(){
       status.textContent = "Couldn't send — please email hello@chrisviscito.com directly.";
       status.className = 'form-status show err';
+    }).finally(function(){
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send message';
     });
   });
 
