@@ -1088,12 +1088,11 @@ section:first-of-type{border-top:none;}
         </div>
       </div>
 
-      <form class="contact-form reveal" id="contactForm" action="https://formspree.io/f/your-form-id" method="POST">
-        <input type="hidden" name="_subject" value="New inquiry from chrisviscito.com">
-        <div class="form-row" style="position:absolute;left:-9999px;" aria-hidden="true">
-          <label for="company">Company</label>
-          <input type="text" id="company" name="company" tabindex="-1" autocomplete="off">
-        </div>
+      <form class="contact-form reveal" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="your-web3forms-access-key">
+        <input type="hidden" name="subject" value="New inquiry from chrisviscito.com">
+        <input type="hidden" name="from_name" value="chrisviscito.com contact form">
+        <input type="checkbox" name="botcheck" id="botcheck" style="display:none;" tabindex="-1" autocomplete="off">
         <div class="two-col">
           <div class="form-row">
             <label for="name">Name</label>
@@ -1121,7 +1120,7 @@ section:first-of-type{border-top:none;}
           <textarea id="message" name="message" required aria-required="true" placeholder="Word count, deadline, and a link to the script if you have one."></textarea>
         </div>
         <button type="submit" class="btn btn-amber" id="formSubmit" style="width:100%;justify-content:center;">Send message</button>
-        <p class="form-note">Replace the form's action URL with your own Formspree endpoint (or similar) — see README for setup.</p>
+        <p class="form-note">Replace the access_key value above with your own Web3Forms access key — see README for setup.</p>
         <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
       </form>
     </div>
@@ -1343,14 +1342,15 @@ section:first-of-type{border-top:none;}
   form.addEventListener('submit', function(e){
     e.preventDefault();
 
-    // Honeypot: bots fill every field, humans never see or fill this one.
-    if (form.elements.company && form.elements.company.value){
+    // Honeypot: bots check every checkbox, humans never see or check this one.
+    if (form.elements.botcheck && form.elements.botcheck.checked){
       return;
     }
 
     var actionUrl = form.getAttribute('action');
-    if (!actionUrl || actionUrl.indexOf('your-form-id') !== -1){
-      status.textContent = "Form isn't connected yet — email hello@chrisviscito.com directly, or see the README to connect Formspree.";
+    var accessKey = form.elements.access_key ? form.elements.access_key.value : '';
+    if (!accessKey || accessKey === 'your-web3forms-access-key'){
+      status.textContent = "Form isn't connected yet — email hello@chrisviscito.com directly, or see the README to connect Web3Forms.";
       status.className = 'form-status show err';
       return;
     }
@@ -1363,13 +1363,15 @@ section:first-of-type{border-top:none;}
       body: new FormData(form),
       headers: { 'Accept': 'application/json' }
     }).then(function(res){
-      if (res.ok){
-        status.textContent = 'Message sent — you\'ll hear back within one business day.';
-        status.className = 'form-status show ok';
-        form.reset();
-      } else {
-        throw new Error('Send failed');
-      }
+      return res.json().then(function(data){
+        if (res.ok && data.success){
+          status.textContent = 'Message sent — you\'ll hear back within one business day.';
+          status.className = 'form-status show ok';
+          form.reset();
+        } else {
+          throw new Error(data.message || 'Send failed');
+        }
+      });
     }).catch(function(){
       status.textContent = "Couldn't send — please email hello@chrisviscito.com directly.";
       status.className = 'form-status show err';

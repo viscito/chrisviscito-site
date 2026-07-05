@@ -88,4 +88,12 @@ Changes go live within a minute or two.
 ---
 
 ## Adding your real content
-See the file list and placeholder notes in `index.html` — anything marked `[Replace...]` or "placeholder" is meant to be swapped out (bio, headshot, demo MP3s in `assets/audio`, client logos, testimonials, contact email, social links, and the Formspree endpoint for the contact form). Ask me anytime if you'd like help with any of it.
+See the file list and placeholder notes in `index.html` — anything marked `[Replace...]` or "placeholder" is meant to be swapped out (bio, headshot, demo MP3s in `assets/audio`, client logos, testimonials, contact email, social links, and the Web3Forms access key for the contact form). Ask me anytime if you'd like help with any of it.
+
+### Connecting the contact form (Web3Forms)
+The contact form submits to [Web3Forms](https://web3forms.com), a free service that emails you every submission — no account/dashboard login required, just an access key sent to your inbox.
+
+1. Go to **web3forms.com** and enter the email address you want submissions delivered to
+2. Check that inbox for your **Access Key**
+3. In `index.html`, find the contact form and replace `your-web3forms-access-key` in the hidden `access_key` field with your real key
+4. Commit and push — the form is now live
