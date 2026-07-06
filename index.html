@@ -717,6 +717,14 @@ section:first-of-type{border-top:none;}
   "knowsAbout": ["Commercial voice over", "Narration", "Character voice acting", "E-Learning voice over", "IVR and telephony voice over", "Audiobook narration"]
 }
 </script>
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xiemhpu2pb");
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="3e7e969f-f822-48be-8b48-cbe744e23688"></script>
 </head>
 <body>
 
@@ -726,12 +734,12 @@ section:first-of-type{border-top:none;}
     <a href="#top" class="brand"><span class="tally" aria-hidden="true"></span>Chris&nbsp;Viscito</a>
     <div class="header-right">
       <nav class="nav" id="siteNav">
-        <a href="#reel">Demos</a>
-        <a href="#about">About</a>
-        <a href="#services">Services</a>
-        <a href="#clients">Clients</a>
-        <a href="#contact">Contact</a>
-        <a href="#contact" class="btn btn-amber header-cta">Book a session</a>
+        <a href="#reel" data-umami-event="Nav click" data-umami-event-section="Demos">Demos</a>
+        <a href="#about" data-umami-event="Nav click" data-umami-event-section="About">About</a>
+        <a href="#services" data-umami-event="Nav click" data-umami-event-section="Services">Services</a>
+        <a href="#clients" data-umami-event="Nav click" data-umami-event-section="Clients">Clients</a>
+        <a href="#contact" data-umami-event="Nav click" data-umami-event-section="Contact">Contact</a>
+        <a href="#contact" class="btn btn-amber header-cta" data-umami-event="Book a session click" data-umami-event-location="header">Book a session</a>
       </nav>
       <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to light theme">
         <svg class="theme-toggle-icon icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><path d="M12 3v2.5M12 18.5V21M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M3 12h2.5M18.5 12H21M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
@@ -753,8 +761,8 @@ section:first-of-type{border-top:none;}
         <h1>Say it once.<br>Make it <em>stick.</em></h1>
         <p class="lede">Chris records broadcast-ready commercial, narration, e‑learning and character voice over from his home studio — directed live, delivered same day.</p>
         <div class="hero-actions">
-          <a href="#reel" class="btn btn-amber">Play the reel</a>
-          <a href="#contact" class="btn btn-ghost">Get a quote</a>
+          <a href="#reel" class="btn btn-amber" data-umami-event="Play the reel click">Play the reel</a>
+          <a href="#contact" class="btn btn-ghost" data-umami-event="Get a quote click" data-umami-event-location="hero">Get a quote</a>
         </div>
         <dl class="hero-stats">
           <div><dt>Turnaround</dt><dd>Same‑day, most projects</dd></div>
@@ -1227,6 +1235,7 @@ section:first-of-type{border-top:none;}
       tab.classList.add('active');
       tab.setAttribute('aria-selected','true');
       var cat = tab.getAttribute('data-cat');
+      if (window.umami) umami.track('Demo tab click', { category: cat });
       tracks.forEach(function(track){
         var match = track.getAttribute('data-cat') === cat;
         track.hidden = !match;
@@ -1337,6 +1346,13 @@ section:first-of-type{border-top:none;}
             track.classList.add('is-playing');
             activeTrack = track;
             animateBars();
+            if (window.umami){
+              var titleEl = track.querySelector('.track-title');
+              umami.track('Demo play', {
+                title: titleEl ? titleEl.textContent : '',
+                category: track.getAttribute('data-cat')
+              });
+            }
           }).catch(function(){
             track.classList.add('is-missing');
           });
@@ -1396,6 +1412,7 @@ section:first-of-type{border-top:none;}
           status.textContent = 'Message sent — you\'ll hear back within one business day.';
           status.className = 'form-status show ok';
           form.reset();
+          if (window.umami) umami.track('Contact form submitted');
         } else {
           throw new Error(data.message || 'Send failed');
         }
@@ -1403,6 +1420,7 @@ section:first-of-type{border-top:none;}
     }).catch(function(){
       status.textContent = "Couldn't send — please email hello@chrisviscito.com directly.";
       status.className = 'form-status show err';
+      if (window.umami) umami.track('Contact form failed');
     }).finally(function(){
       submitBtn.disabled = false;
       submitBtn.textContent = 'Send message';
