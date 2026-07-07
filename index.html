@@ -29,6 +29,7 @@
   --chalk:#EDEAE2;
   --fog:#8891A0;
   --amber:#E7A33E;
+  --amber-fade: rgba(231,163,62,0.25);
   --rust:#C1502E;
   --amber-text:#E7A33E;
   --rust-text:#C1502E;
@@ -48,6 +49,7 @@
   --chalk:#221D18;
   --fog:#6B6259;
   --amber:#2A6FDB;
+  --amber-fade: rgba(42,111,219,0.25);
   --amber-text:#1F5BC4;
   --on-amber:#FFFFFF;
   --rust-text:#A83F22;
@@ -312,7 +314,7 @@ section:first-of-type{border-top:none;}
 .bars span{
   flex:1;
   height:100%;
-  background:linear-gradient(180deg, var(--amber), rgba(231,163,62,0.25));
+  background:linear-gradient(180deg, var(--amber), var(--amber-fade));
   border-radius:2px 2px 0 0;
   animation:bar-bounce 1.6s ease-in-out infinite;
   transform-origin:bottom;
