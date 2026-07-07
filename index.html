@@ -30,6 +30,7 @@
   --fog:#8891A0;
   --amber:#E7A33E;
   --amber-fade: rgba(231,163,62,0.25);
+  --amber-border: rgba(231,163,62,0.45);
   --rust:#C1502E;
   --amber-text:#E7A33E;
   --rust-text:#C1502E;
@@ -50,6 +51,7 @@
   --fog:#6B6259;
   --amber:#2A6FDB;
   --amber-fade: rgba(42,111,219,0.25);
+  --amber-border: rgba(42,111,219,0.45);
   --amber-text:#1F5BC4;
   --on-amber:#FFFFFF;
   --rust-text:#A83F22;
@@ -520,19 +522,17 @@ section:first-of-type{border-top:none;}
 .logo-strip{
   display:grid;
   grid-template-columns:repeat(5,1fr);
-  gap:1px;
-  background:var(--line);
-  border:1px solid var(--line);
-  border-radius:6px;
-  overflow:hidden;
+  gap:12px;
 }
 .logo-box{
   background:var(--panel);
+  border:1.5px dashed var(--amber-border);
+  border-radius:6px;
   height:88px;
   display:flex;align-items:center;justify-content:center;
   font-family:var(--mono);
   font-size:11px;
-  color:var(--fog);
+  color:var(--amber-text);
   text-align:center;
   padding:8px;
 }
@@ -545,7 +545,7 @@ section:first-of-type{border-top:none;}
 }
 .quote-card{
   background:var(--panel);
-  border:1px solid var(--line);
+  border:1.5px dashed var(--amber-border);
   border-radius:6px;
   padding:30px 26px;
 }
