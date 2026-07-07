@@ -311,10 +311,12 @@ section:first-of-type{border-top:none;}
 }
 .bars span{
   flex:1;
+  height:100%;
   background:linear-gradient(180deg, var(--amber), rgba(231,163,62,0.25));
   border-radius:2px 2px 0 0;
   animation:bar-bounce 1.6s ease-in-out infinite;
   transform-origin:bottom;
+  box-shadow:0 0 10px rgba(231,163,62,0.35);
 }
 @keyframes bar-bounce{
   0%,100%{transform:scaleY(var(--min,0.15));}
