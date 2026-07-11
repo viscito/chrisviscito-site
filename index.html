@@ -629,6 +629,14 @@ section:first-of-type{border-top:none;}
   outline:none;
 }
 .form-row textarea{resize:vertical;min-height:100px;}
+.captcha-row{
+  background:var(--ink);
+  border:1px solid var(--line-strong);
+  border-radius:3px;
+  padding:13px 14px;
+  display:flex;
+  justify-content:center;
+}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 .form-note{
   font-size:12.5px;
@@ -1158,7 +1166,7 @@ section:first-of-type{border-top:none;}
           <label for="message">Project details</label>
           <textarea id="message" name="message" required aria-required="true" placeholder="Word count, deadline, and a link to the script if you have one."></textarea>
         </div>
-        <div class="form-row">
+        <div class="form-row captcha-row">
           <div class="h-captcha" id="hcaptchaWidget"></div>
         </div>
         <button type="submit" class="btn btn-amber" id="formSubmit" style="width:100%;justify-content:center;">Send message</button>
