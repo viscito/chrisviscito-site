@@ -1159,7 +1159,7 @@ section:first-of-type{border-top:none;}
           <textarea id="message" name="message" required aria-required="true" placeholder="Word count, deadline, and a link to the script if you have one."></textarea>
         </div>
         <div class="form-row">
-          <div class="h-captcha" data-captcha="true"></div>
+          <div class="h-captcha" id="hcaptchaWidget"></div>
         </div>
         <button type="submit" class="btn btn-amber" id="formSubmit" style="width:100%;justify-content:center;">Send message</button>
         <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
@@ -1203,6 +1203,24 @@ section:first-of-type{border-top:none;}
       themeToggle.setAttribute('aria-label', 'Switch to light theme');
     }
     if (themeMeta) themeMeta.setAttribute('content', THEME_COLORS[theme]);
+    renderCaptcha(theme);
+  }
+
+  // ---------- hCaptcha (theme-matched) ----------
+  var HCAPTCHA_SITEKEY = '50b2fe65-b00b-4b9e-ad62-3ba471098be2';
+  var hcaptchaWidgetId = null;
+  window.onHcaptchaLoad = function(){
+    renderCaptcha(root.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
+  };
+  function renderCaptcha(theme){
+    if (!window.hcaptcha || !document.getElementById('hcaptchaWidget')) return;
+    if (hcaptchaWidgetId !== null){
+      hcaptcha.remove(hcaptchaWidgetId);
+    }
+    hcaptchaWidgetId = hcaptcha.render('hcaptchaWidget', {
+      sitekey: HCAPTCHA_SITEKEY,
+      theme: theme
+    });
   }
 
   var storedTheme = null;
@@ -1456,6 +1474,6 @@ section:first-of-type{border-top:none;}
 
 })();
 </script>
-<script src="https://web3forms.com/client/script.js" async defer></script>
+<script src="https://js.hcaptcha.com/1/api.js?onload=onHcaptchaLoad&render=explicit" async defer></script>
 </body>
 </html>
