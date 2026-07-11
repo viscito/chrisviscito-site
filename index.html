@@ -711,7 +711,6 @@ section:first-of-type{border-top:none;}
   "jobTitle": "Voice Over Artist",
   "url": "https://chrisviscito.com",
   "image": "https://chrisviscito.com/assets/img/headshot.jpg",
-  "email": "mailto:hello@chrisviscito.com",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Saint Charles",
@@ -1116,7 +1115,6 @@ section:first-of-type{border-top:none;}
         <h2 class="section-title">Let's get it recorded</h2>
         <p>Send over your script or brief and you'll hear back with a quote and turnaround time within one business day.</p>
         <ul class="contact-meta">
-          <li><strong>Email</strong>hello@chrisviscito.com </li>
           <li><strong>Response time</strong>Usually within one business day</li>
           <li><strong>Availability</strong>Same‑day turnaround on most bookings</li>
         </ul>
@@ -1159,6 +1157,9 @@ section:first-of-type{border-top:none;}
         <div class="form-row">
           <label for="message">Project details</label>
           <textarea id="message" name="message" required aria-required="true" placeholder="Word count, deadline, and a link to the script if you have one."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="h-captcha" data-captcha="true"></div>
         </div>
         <button type="submit" class="btn btn-amber" id="formSubmit" style="width:100%;justify-content:center;">Send message</button>
         <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
@@ -1395,10 +1396,17 @@ section:first-of-type{border-top:none;}
       return;
     }
 
+    var captchaField = form.querySelector('textarea[name="h-captcha-response"]');
+    if (captchaField && !captchaField.value){
+      status.textContent = 'Please complete the captcha before sending.';
+      status.className = 'form-status show err';
+      return;
+    }
+
     var actionUrl = form.getAttribute('action');
     var accessKey = form.elements.access_key ? form.elements.access_key.value : '';
     if (!accessKey || accessKey === 'your-web3forms-access-key'){
-      status.textContent = "Form isn't connected yet — email hello@chrisviscito.com directly, or see the README to connect Web3Forms.";
+      status.textContent = "Form isn't connected yet — please try again shortly, or see the README to connect Web3Forms.";
       status.className = 'form-status show err';
       return;
     }
@@ -1422,7 +1430,7 @@ section:first-of-type{border-top:none;}
         }
       });
     }).catch(function(){
-      status.textContent = "Couldn't send — please email hello@chrisviscito.com directly.";
+      status.textContent = "Couldn't send — please try again in a moment.";
       status.className = 'form-status show err';
       if (window.umami) umami.track('Contact form failed');
     }).finally(function(){
@@ -1448,5 +1456,6 @@ section:first-of-type{border-top:none;}
 
 })();
 </script>
+<script src="https://web3forms.com/client/script.js" async defer></script>
 </body>
 </html>
