@@ -1,4 +1,50 @@
 User-agent: *
 Allow: /
 
+# Opt out of AI training crawlers for audio demo files specifically.
+# These recordings are Chris Viscito's voice and performance and are not
+# licensed for use in training, fine-tuning, or developing AI/ML models,
+# including voice-cloning or text-to-speech systems.
+User-agent: GPTBot
+Disallow: /assets/audio/
+
+User-agent: ChatGPT-User
+Disallow: /assets/audio/
+
+User-agent: Google-Extended
+Disallow: /assets/audio/
+
+User-agent: CCBot
+Disallow: /assets/audio/
+
+User-agent: ClaudeBot
+Disallow: /assets/audio/
+
+User-agent: anthropic-ai
+Disallow: /assets/audio/
+
+User-agent: Claude-Web
+Disallow: /assets/audio/
+
+User-agent: Bytespider
+Disallow: /assets/audio/
+
+User-agent: PerplexityBot
+Disallow: /assets/audio/
+
+User-agent: Applebot-Extended
+Disallow: /assets/audio/
+
+User-agent: Meta-ExternalAgent
+Disallow: /assets/audio/
+
+User-agent: Diffbot
+Disallow: /assets/audio/
+
+User-agent: Omgilibot
+Disallow: /assets/audio/
+
+User-agent: YouBot
+Disallow: /assets/audio/
+
 Sitemap: https://chrisviscito.com/sitemap.xml
