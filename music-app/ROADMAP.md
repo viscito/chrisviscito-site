@@ -79,10 +79,11 @@ library, and plays it end-to-end in-app.
 - ✅ **Token/credential service spec** — [`backend/TOKEN_SERVICE.md`](./backend/TOKEN_SERVICE.md):
   Apple Music developer-token signing, token vending for MusicKit, secure user-token
   storage, and the general credential-broker interface.
+- ✅ **Token service implementation** — [`backend/token-service/`](./backend/token-service/):
+  a working TypeScript BFF (Hono + jose), green test suite, real Apple call path.
 
 ## What I can produce next (pick any)
 
-- Implement the **token service** from the spec (a small TypeScript BFF).
 - Implement the **kept-in-sync reconciliation engine** (R2) in `CrossfadeKit`.
 - The **full Phase-1 API contract** (playlists, unified library, sync jobs) beyond
   the token service.

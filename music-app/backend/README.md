@@ -6,10 +6,17 @@ store (see [`../ARCHITECTURE.md`](../ARCHITECTURE.md)).
 
 ## Documents
 
-- **[`TOKEN_SERVICE.md`](./TOKEN_SERVICE.md)** — the credential & token service:
-  how Crossfade authorizes to the Apple Music API (developer-token JWT signing),
-  vends what MusicKit needs to the app, stores per-user tokens securely, and
-  generalizes to a per-service credential broker (Spotify next).
+- **[`TOKEN_SERVICE.md`](./TOKEN_SERVICE.md)** — the credential & token service
+  spec: how Crossfade authorizes to the Apple Music API (developer-token JWT
+  signing), vends what MusicKit needs to the app, stores per-user tokens securely,
+  and generalizes to a per-service credential broker (Spotify next).
+
+## Implementation
+
+- **[`token-service/`](./token-service/)** — a working TypeScript BFF implementing
+  the spec (Hono + jose + zod, Node crypto envelope encryption). `npm test` runs a
+  green suite (JWT signing, envelope round-trip, full HTTP API incl. R1 gating and
+  rate limiting). See [`token-service/README.md`](./token-service/README.md).
 
 ## Not yet specced (roadmap)
 
