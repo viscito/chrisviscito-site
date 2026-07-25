@@ -78,6 +78,15 @@ in-app playback via a service SDK — are solved once before generalizing.
 
 ## 8. The playback experience (and its honest limitation)
 
+**Product principle — in-app-first.** Crossfade owns the playlist, browsing, and
+Now Playing experience. The user stays visually inside Crossfade to control
+playback; they are never bounced out to a service's app for normal listening. We
+integrate services that allow this (Apple Music: fully in-app; Spotify: in-app UI
+with its app brokering audio in the background — acceptable). A service that
+would require *leaving* Crossfade to play is **marked for further investigation
+and not integrated by default.** (Technical detail: the three playback modes are
+in [`ARCHITECTURE.md`](./ARCHITECTURE.md#21-playback-modes--and-the-in-app-first-policy).)
+
 A mixed playlist plays top-to-bottom through one Now Playing UI. When the queue
 crosses from a track on Service A to a track on Service B, there is a **brief
 handoff gap** (the app tears down one player and spins up the other). Within a

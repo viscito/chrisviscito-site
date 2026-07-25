@@ -30,8 +30,12 @@
 library, and plays it end-to-end in-app.
 
 ### Phase 2 — Turn the conductor "on" (second service)
-- Add **Spotify** (recommended second — best-documented SDK/API) *or*
-  validate **YouTube Music** feasibility first if catalog breadth is the priority.
+- Add **Spotify** — recommended second. It's **Mode B** (§2.1 of ARCHITECTURE):
+  in-app UI with a background broker, which satisfies the **in-app-first policy**
+  (Crossfade owns playlist, browsing, and Now Playing; Spotify's app runs in the
+  background). YouTube Music is **not** a Phase-2 candidate — it looks like
+  **Mode C** (forces users out to its app) and is flagged for **further
+  investigation** unless a compliant in-app path is found.
 - Implement its backend client + `PlaybackAdapter` + OAuth (PKCE) flow.
 - Ship the **matching engine** for real: ISRC-first, fuzzy fallback, user
   correction UI.
@@ -50,8 +54,10 @@ library, and plays it end-to-end in-app.
 1. **Platform strategy** — Native iOS first (recommended, fastest to a flawless
    MusicKit experience), or cross-platform (React Native) from the start to reach
    Android sooner? This affects Phase 1 tooling.
-2. **Second service** — Spotify (best tooling) or YouTube Music (biggest catalog,
-   riskier API) after Apple Music?
+2. **Second service** — Spotify is the recommended #2: it's **Mode B / in-app**,
+   satisfying the in-app-first policy. (YouTube Music is deferred to "further
+   investigation" because it appears to force users out of the app — Mode C.)
+   Confirm Spotify, or name another **in-app-capable** service to prioritize.
 3. **Playlist source of truth** — confirm the recommended model: Crossfade
    backend is canonical, with *optional* mirroring back into each service's
    native library. (vs. treating each service's library as truth.)

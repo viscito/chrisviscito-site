@@ -87,6 +87,38 @@ For the **Apple Music MVP** there is exactly one adapter, so playback is fully
 continuous and none of the handoff caveats apply yet — but the coordinator is
 built with the interface above from day one.
 
+### 2.1 Playback modes — and the in-app-first policy
+
+"Hand off to the service's SDK" is not one thing. An adapter can operate in one
+of three modes, which differ by **whether the user ever leaves the Crossfade
+app**:
+
+| Mode | What the user sees | Example services | Leaves Crossfade? |
+|---|---|---|---|
+| **A — In-app SDK playback** | Stays 100% in Crossfade; our Now Playing UI drives the audio directly | **Apple Music** (MusicKit) | ❌ Never |
+| **B — In-app UI, background broker** | Stays in Crossfade's UI; a service's app is installed and runs in the background doing the actual decode, driven by our controls | **Spotify on iOS** (App Remote SDK) | ❌ Not visually — but requires their app installed |
+| **C — Deep-link handoff** | Pressing play **opens the service's own app** | Likely **YouTube Music** (no compliant embeddable playback) | ✅ Yes |
+
+**Policy (product decision):** Crossfade is **in-app-first**. We integrate
+services that support **Mode A or Mode B**, where Crossfade owns the playlist,
+browsing, and Now Playing experience end-to-end. Both are acceptable — including
+Mode B's background-broker dependency (e.g. Spotify requiring its app installed
+and a Premium account) — **so long as the user never has to leave Crossfade to
+play, pause, skip, or scrub.**
+
+A service that can only be reached in **Mode C** (forcing the user out to a
+native app) is **not adopted by default**. It is flagged **"further
+investigation / integration"**: we look for any compliant in-app path first, and
+only consider a Mode-C fallback as an explicit, clearly-labeled degraded
+experience — never the standard one.
+
+**Consequence for mixed playlists:** Mode-A and Mode-B tracks play back-to-back
+inside our UI (subject only to the handoff gap below). A Mode-C track, if ever
+allowed, would interrupt the in-app session by launching another app — so the
+queue must **visibly badge Mode-C tracks** and offer to auto-skip them rather
+than surprise the listener mid-playlist. Until a service earns Mode A/B support,
+its tracks simply aren't addable to a playable Crossfade queue.
+
 ---
 
 ## 3. Apple Music integration (MVP, in depth)
@@ -154,16 +186,18 @@ flow. Nothing in the app core, data model, or UI changes. This is why the MVP,
 though Apple-only, is genuinely a multi-platform product and not a rewrite
 waiting to happen.
 
-Per-service reality to encode in each adapter:
+Per-service reality to encode in each adapter (playback mode per §2.1):
 
-| Service | Auth | Playback SDK | Full playback needs sub? | Notable constraints |
-|---|---|---|---|---|
-| **Apple Music** | Developer JWT + Music User Token | MusicKit (iOS/JS) | Yes | Storefront-scoped catalog |
-| Spotify* | OAuth 2.0 (PKCE) | Web Playback SDK / iOS SDK | Yes (Premium) | Playback SDK is Premium-only |
-| YouTube Music* | Google OAuth | (constrained) | Varies | API access more limited; validate feasibility early |
-| Tidal / Amazon* | OAuth | Native SDKs | Yes | Smaller reach |
+| Service | Auth | Playback SDK | Mode | Full playback needs sub? | Adoption |
+|---|---|---|---|---|---|
+| **Apple Music** | Developer JWT + Music User Token | MusicKit (iOS/JS) | **A** — fully in-app | Yes | ✅ MVP |
+| Spotify* | OAuth 2.0 (PKCE) | Web Playback SDK / iOS App Remote SDK | **B** — in-app UI, background broker (their app installed) | Yes (Premium) | ✅ Recommended #2 |
+| Tidal / Amazon* | OAuth | Native SDKs | A/B — validate per SDK | Yes | ⏳ Later, if in-app capable |
+| YouTube Music* | Google OAuth | No compliant embeddable playback (likely) | **C** — deep-link handoff | Varies | 🔍 **Further investigation** — not adopted unless an in-app (A/B) path is found |
 
-\* post-MVP.
+\* post-MVP. Per the **in-app-first policy (§2.1)**, only Mode A/B services are
+integrated by default; Mode-C services are flagged for investigation, not shipped
+as the standard experience.
 
 ---
 

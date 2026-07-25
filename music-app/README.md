@@ -22,6 +22,14 @@ hands off to the correct service's playback SDK. The listener experiences one
 continuous playlist; the audio is always sourced legally from the platform that
 owns it.
 
+**In-app-first policy:** Crossfade always owns the playlist, browsing, and Now
+Playing experience — the user stays *visually* inside Crossfade to play, pause,
+skip, and scrub. We integrate services that support this (Apple Music plays fully
+in-app; Spotify plays via its app running in the background, controlled from our
+UI). Any service that would force the user *out* to its own app is **flagged for
+further investigation, not adopted by default.** See the three playback modes in
+[`ARCHITECTURE.md`](./ARCHITECTURE.md#21-playback-modes--and-the-in-app-first-policy).
+
 That single constraint drives the entire architecture. See
 [`ARCHITECTURE.md`](./ARCHITECTURE.md#the-conductor-playback-model).
 
