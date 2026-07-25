@@ -36,7 +36,46 @@ service's own player.
    shared playlist "just plays" for them.
 4. **Painless migration** — mirror a playlist from one service to another in a tap.
 
-## 5. MVP scope (Apple Music only)
+## 5. Functional requirements (v0.2 — locked)
+
+These are committed product requirements. Each notes how it behaves given the
+in-app-first policy (§9) and the Apple-Music-first build order.
+
+**R1 — Provider requirements are enforced.** A user can only *use* a linked
+service if they meet that provider's requirements (e.g. **Apple Music
+subscription**, **Spotify Premium**). Crossfade checks the account's
+subscription/entitlement on link and before playback; if the requirement isn't
+met, the service is shown as **linked but not playable**, with a clear prompt
+explaining what's needed. Crossfade never provides music itself — it always sits
+on top of the user's own paid subscription.
+
+**R2 — Import existing playlists (kept in sync).** Users can **import their
+current playlists** from any linked service into Crossfade. Import reads the
+source playlist, resolves each track to a `UnifiedTrack` (ISRC-first), and creates
+a Crossfade playlist that **stays linked to the source and tracks changes over
+time** (decision: synced, not a one-time snapshot). This requires a sync engine
+with periodic reconciliation and conflict handling — see
+[`ARCHITECTURE.md`](./ARCHITECTURE.md) and the roadmap; it is a Phase-2-grade
+capability, mocked in the prototype.
+
+**R3 — Cross-platform search.** Users can **search for music across every linked /
+available platform** from one search box. Results fan out to each connected
+service, are de-duplicated by ISRC, and each result shows which service(s) can
+play it.
+
+**R4 — Provider identification on every track.** Every track in a playlist (and in
+search/library) carries the **source provider's identifying logo/badge**, so the
+user always knows where a given song is coming from and which service will play
+it.
+
+**R5 — Supported-services browser.** Users can **browse the top 5 US music
+streaming services** and see, for each, whether it's **supported in Crossfade**
+(supported now / planned / under investigation / not supported), with a short
+reason tied to the in-app-first policy (§9).
+
+---
+
+## 6. MVP scope (Apple Music only)
 
 The MVP proves the model with a **single service** so the hard parts —
 authorization, catalog normalization, library sync, playlist CRUD, and
@@ -57,26 +96,32 @@ in-app playback via a service SDK — are solved once before generalizing.
 - Cross-service matching UI, migration, collaborative playlists, social sharing.
 - Recommendations / algorithmic discovery.
 
-## 6. Non-goals (things we will NOT do)
+## 7. Non-goals (things we will NOT do)
 
 - ❌ Decrypt, download, cache, or re-host audio from any service.
 - ❌ Play a service's full tracks without that service's SDK/subscription.
 - ❌ Bypass or proxy around any platform's Terms of Service or API limits.
 - ❌ Be a "free music" app. Crossfade sits *on top of* paid subscriptions.
 
-## 7. Key screens (MVP)
+## 8. Key screens (MVP)
 
 1. **Onboarding / Connect Services** — big "Connect Apple Music" button; explains
-   what's shared and that a subscription is needed for playback.
-2. **Home / Library** — unified view; for MVP shows Apple Music library + your
-   Crossfade playlists. A per-track badge shows its source service.
-3. **Search** — one search box; results grouped/deduped; add-to-playlist action.
-4. **Playlist detail** — reorder, remove, play. Each row shows its service badge.
-5. **Now Playing** — standard transport (play/pause/skip/scrub), plus a subtle
+   what's shared and that a subscription is needed for playback **(R1)**.
+2. **Supported services** — browse the top 5 US streaming services and each one's
+   support status in Crossfade **(R5)**.
+3. **Home / Library** — unified view; for MVP shows Apple Music library + your
+   Crossfade playlists. A per-track **provider logo** shows its source **(R4)**.
+4. **Import playlists** — pick playlists from a linked service and import them into
+   Crossfade **(R2)**.
+5. **Search** — one search box across all linked platforms; results deduped, each
+   showing its provider **(R3, R4)**; add-to-playlist action.
+6. **Playlist detail** — reorder, remove, play. Each row shows its **provider
+   logo** **(R4)**.
+7. **Now Playing** — standard transport (play/pause/skip/scrub), plus a subtle
    indicator of which service is currently providing audio.
-6. **Settings** — manage linked services, disconnect, privacy controls.
+8. **Settings** — manage linked services, disconnect, privacy controls.
 
-## 8. The playback experience (and its honest limitation)
+## 9. The playback experience (and its honest limitation)
 
 **Product principle — in-app-first.** Crossfade owns the playlist, browsing, and
 Now Playing experience. The user stays visually inside Crossfade to control
@@ -94,7 +139,7 @@ single service, playback is normal. We set expectations in the UI rather than
 pretend it's gapless. For the MVP (Apple Music only) there are no cross-service
 boundaries, so playback is fully continuous.
 
-## 9. Business model (options to decide)
+## 10. Business model (options to decide)
 
 - **Freemium subscription** — free to link + organize; paid tier for unlimited
   playlists, migration, collaborative playlists, larger sync. *(Recommended.)*
@@ -105,14 +150,14 @@ boundaries, so playback is fully continuous.
 *Note:* Crossfade never resells music, so revenue comes from the organization/
 utility layer, not the audio.
 
-## 10. Success metrics
+## 11. Success metrics
 
 - Activation: % of installs that link ≥1 service.
 - Core action: playlists created & tracks added per active user.
 - The multi-service moment (post-MVP): % of users who link a **2nd** service.
 - Retention: W1 / W4 retention of users who created ≥1 playlist.
 
-## 11. Major risks
+## 12. Major risks
 
 | Risk | Mitigation |
 |---|---|
