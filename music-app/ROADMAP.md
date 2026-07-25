@@ -84,10 +84,11 @@ library, and plays it end-to-end in-app.
 - ✅ **R2 kept-in-sync engine** — `PlaylistSyncEngine` + `UnifiedTrackCatalog` in
   `CrossfadeKit` (`Sync/`): source-authoritative reconciliation of imported items
   with local-item preservation, ISRC de-dup, and a unit-test suite.
+- ✅ **Sync job runner** — [`backend/sync-worker/`](./backend/sync-worker/): drives
+  the reconciliation on a schedule, reads sources via the token-service brokered
+  endpoint, one-failure-isolated run reports, green test suite + runnable demo.
 
 ## What I can produce next (pick any)
-- The **sync job runner** that *drives* `PlaylistSyncEngine` on a schedule (backend
-  worker + the brokered library reads already in the token service).
 - The **full Phase-1 API contract** (playlists, unified library, sync jobs) beyond
   the token service.
 - Wire the **real MusicKit path** end-to-end (developer-token service + entitlement).
