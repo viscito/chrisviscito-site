@@ -1,0 +1,907 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crossfade — Clickable Prototype</title>
+<meta name="description" content="Clickable mobile prototype of Crossfade, a multi-platform music app. Demonstrates requirements R1–R5. Mock data only.">
+<style>html,body{margin:0;padding:0}body{background:#0b0d12}</style>
+</head>
+<body>
+<style>
+  /* ============================ TOKENS ============================ */
+  :root{
+    --bg:#0b0d12; --bg-2:#0e1118;
+    --bezel:#04050a; --bezel-edge:rgba(255,255,255,.06);
+    --screen:#0f1218; --surface:#161a22; --surface-2:#1d222c; --surface-3:#232935;
+    --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.15);
+    --text:#eef0f6; --muted:#9aa1b2; --faint:#656d7e;
+    --violet:#8b7bff; --violet-dim:rgba(139,123,255,.16); --aqua:#21d3c4;
+    --grad:linear-gradient(90deg,#8b7bff,#21d3c4);
+    --ok:#37c98b; --ok-bg:rgba(55,201,139,.14);
+    --plan:#6ea8ff; --plan-bg:rgba(110,168,255,.14);
+    --warn:#f5b13d; --warn-bg:rgba(245,177,61,.14);
+    --no:#ff6b6b; --no-bg:rgba(255,107,107,.13);
+    --rail-bg:rgba(255,255,255,.02);
+    --ui:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,'SF Mono','JetBrains Mono','Menlo',Consolas,monospace;
+    --shadow:0 40px 90px -30px rgba(0,0,0,.85),0 8px 30px -10px rgba(0,0,0,.6);
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#e8eaf1; --bg-2:#dfe2ec;
+      --bezel:#c7cbd6; --bezel-edge:rgba(0,0,0,.10);
+      --screen:#f5f6fb; --surface:#ffffff; --surface-2:#f0f2f8; --surface-3:#e7eaf2;
+      --line:rgba(16,19,25,.10); --line-2:rgba(16,19,25,.18);
+      --text:#161a22; --muted:#59616f; --faint:#8b93a2;
+      --violet:#6a54ff; --violet-dim:rgba(106,84,255,.12); --aqua:#0bb3a4;
+      --grad:linear-gradient(90deg,#6a54ff,#0bb3a4);
+      --ok:#129c66; --ok-bg:rgba(18,156,102,.12);
+      --plan:#2f6fe0; --plan-bg:rgba(47,111,224,.12);
+      --warn:#c9820c; --warn-bg:rgba(201,130,12,.14);
+      --no:#e0453f; --no-bg:rgba(224,69,63,.10);
+      --rail-bg:rgba(16,19,25,.02);
+      --shadow:0 40px 80px -34px rgba(30,35,60,.5),0 8px 26px -12px rgba(30,35,60,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0b0d12; --bg-2:#0e1118; --bezel:#04050a; --bezel-edge:rgba(255,255,255,.06);
+    --screen:#0f1218; --surface:#161a22; --surface-2:#1d222c; --surface-3:#232935;
+    --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.15);
+    --text:#eef0f6; --muted:#9aa1b2; --faint:#656d7e;
+    --violet:#8b7bff; --violet-dim:rgba(139,123,255,.16); --aqua:#21d3c4;
+    --grad:linear-gradient(90deg,#8b7bff,#21d3c4);
+    --ok:#37c98b; --ok-bg:rgba(55,201,139,.14); --plan:#6ea8ff; --plan-bg:rgba(110,168,255,.14);
+    --warn:#f5b13d; --warn-bg:rgba(245,177,61,.14); --no:#ff6b6b; --no-bg:rgba(255,107,107,.13);
+    --rail-bg:rgba(255,255,255,.02);
+    --shadow:0 40px 90px -30px rgba(0,0,0,.85),0 8px 30px -10px rgba(0,0,0,.6);
+  }
+  :root[data-theme="light"]{
+    --bg:#e8eaf1; --bg-2:#dfe2ec; --bezel:#c7cbd6; --bezel-edge:rgba(0,0,0,.10);
+    --screen:#f5f6fb; --surface:#ffffff; --surface-2:#f0f2f8; --surface-3:#e7eaf2;
+    --line:rgba(16,19,25,.10); --line-2:rgba(16,19,25,.18);
+    --text:#161a22; --muted:#59616f; --faint:#8b93a2;
+    --violet:#6a54ff; --violet-dim:rgba(106,84,255,.12); --aqua:#0bb3a4;
+    --grad:linear-gradient(90deg,#6a54ff,#0bb3a4);
+    --ok:#129c66; --ok-bg:rgba(18,156,102,.12); --plan:#2f6fe0; --plan-bg:rgba(47,111,224,.12);
+    --warn:#c9820c; --warn-bg:rgba(201,130,12,.14); --no:#e0453f; --no-bg:rgba(224,69,63,.10);
+    --rail-bg:rgba(16,19,25,.02);
+    --shadow:0 40px 80px -34px rgba(30,35,60,.5),0 8px 26px -12px rgba(30,35,60,.35);
+  }
+
+  *{box-sizing:border-box}
+  .cf-stage{
+    min-height:100vh; margin:0; font-family:var(--ui); color:var(--text);
+    background:
+      radial-gradient(1100px 600px at 15% -5%, var(--violet-dim), transparent 60%),
+      radial-gradient(900px 700px at 100% 100%, rgba(33,211,196,.08), transparent 55%),
+      var(--bg);
+    padding:clamp(18px,4vw,54px) clamp(14px,4vw,54px) 60px;
+    display:flex; flex-direction:column; align-items:center; gap:clamp(22px,4vw,40px);
+  }
+
+  /* ---------- brand line ---------- */
+  .cf-top{width:100%; max-width:1040px; display:flex; align-items:center; gap:16px; flex-wrap:wrap}
+  .cf-logo{display:flex; align-items:center; gap:12px}
+  .cf-mark{width:38px; height:38px; flex:0 0 auto}
+  .cf-word{font-size:23px; font-weight:700; letter-spacing:-.02em}
+  .cf-word b{font-weight:700}
+  .cf-tagline{color:var(--muted); font-size:14px; max-width:52ch; line-height:1.5}
+  .cf-top-tag{
+    margin-left:auto; font-family:var(--mono); font-size:11px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--violet); border:1px solid var(--line-2);
+    padding:6px 11px; border-radius:999px; background:var(--violet-dim); white-space:nowrap;
+  }
+
+  /* ---------- layout ---------- */
+  .cf-proto{
+    width:100%; max-width:1040px; display:flex; gap:clamp(24px,4vw,52px);
+    align-items:flex-start; justify-content:center; flex-wrap:wrap;
+  }
+
+  /* ---------- device ---------- */
+  .cf-device{
+    width:376px; height:794px; flex:0 0 auto; border-radius:52px; padding:13px;
+    background:linear-gradient(150deg,#20242e,var(--bezel)); box-shadow:var(--shadow);
+    position:relative; border:1px solid var(--bezel-edge);
+    animation:cf-rise .7s cubic-bezier(.2,.7,.2,1) both;
+  }
+  :root[data-theme="light"] .cf-device{background:linear-gradient(150deg,#f2f3f8,var(--bezel))}
+  @media (prefers-color-scheme: light){.cf-device{background:linear-gradient(150deg,#f2f3f8,var(--bezel))}}
+  @keyframes cf-rise{from{opacity:0; transform:translateY(16px)}to{opacity:1; transform:none}}
+  .cf-screen{
+    position:relative; height:100%; border-radius:40px; overflow:hidden; background:var(--screen);
+    display:flex; flex-direction:column; border:1px solid rgba(0,0,0,.5);
+  }
+
+  /* status bar */
+  .cf-status{
+    height:46px; flex:0 0 auto; display:flex; align-items:center; justify-content:space-between;
+    padding:0 26px 0 30px; font-size:14px; font-weight:600; letter-spacing:.01em; z-index:6;
+    position:relative;
+  }
+  .cf-status .r{display:flex; align-items:center; gap:6px}
+  .cf-notch{position:absolute; top:8px; left:50%; transform:translateX(-50%); width:112px; height:26px;
+    background:var(--bezel); border-radius:16px; z-index:5}
+  :root[data-theme="light"] .cf-notch{background:#0d0f16}
+  @media (prefers-color-scheme:light){.cf-notch{background:#0d0f16}}
+
+  /* view/pages */
+  .cf-view{flex:1 1 auto; overflow-y:auto; overflow-x:hidden; position:relative; -webkit-overflow-scrolling:touch}
+  .cf-view::-webkit-scrollbar{width:0}
+  .cf-page{display:none; flex-direction:column; min-height:100%; animation:cf-fade .28s ease both}
+  .cf-page.active{display:flex}
+  @keyframes cf-fade{from{opacity:0; transform:translateY(6px)}to{opacity:1; transform:none}}
+
+  .cf-head{display:flex; align-items:center; gap:12px; padding:8px 18px 12px; position:sticky; top:0;
+    background:linear-gradient(var(--screen),var(--screen) 70%,transparent); z-index:4}
+  .cf-back{width:34px; height:34px; border-radius:50%; border:1px solid var(--line);
+    background:var(--surface); color:var(--text); display:grid; place-items:center; cursor:pointer; flex:0 0 auto}
+  .cf-back:hover{background:var(--surface-2)}
+  .cf-h1{font-size:26px; font-weight:800; letter-spacing:-.02em; line-height:1.05; text-wrap:balance}
+  .cf-head .cf-h1{font-size:22px}
+  .cf-head-action{margin-left:auto; display:flex; gap:8px}
+  .cf-eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--violet)}
+  .cf-body{padding:2px 18px 26px; display:flex; flex-direction:column; gap:14px}
+
+  /* generic bits */
+  .cf-card{background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:16px}
+  .cf-muted{color:var(--muted); font-size:13.5px; line-height:1.55}
+  .cf-mono{font-family:var(--mono)}
+  .cf-btn{appearance:none; border:none; font-family:var(--ui); font-size:15px; font-weight:650;
+    padding:14px 18px; border-radius:14px; cursor:pointer; color:#0a0b10; background:var(--violet);
+    display:flex; align-items:center; justify-content:center; gap:9px; width:100%;
+    transition:transform .12s ease, filter .12s ease}
+  .cf-btn:hover{filter:brightness(1.07)} .cf-btn:active{transform:scale(.985)}
+  .cf-btn.grad{background:var(--grad); color:#08110f}
+  .cf-btn.ghost{background:var(--surface-2); color:var(--text); border:1px solid var(--line-2)}
+  .cf-btn.sm{width:auto; padding:9px 14px; font-size:13.5px; border-radius:11px}
+  .cf-pill{font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+    padding:4px 8px; border-radius:7px; display:inline-flex; align-items:center; gap:5px; white-space:nowrap}
+  .cf-pill.ok{color:var(--ok); background:var(--ok-bg)} .cf-pill.plan{color:var(--plan); background:var(--plan-bg)}
+  .cf-pill.warn{color:var(--warn); background:var(--warn-bg)} .cf-pill.no{color:var(--no); background:var(--no-bg)}
+  .cf-dot{width:7px; height:7px; border-radius:50%; background:currentColor; flex:0 0 auto}
+
+  /* provider badge */
+  .pb{width:24px; height:24px; border-radius:7px; flex:0 0 auto; display:grid; place-items:center;
+    color:#fff; box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+  .pb svg{width:15px; height:15px}
+  .pb.lg{width:44px; height:44px; border-radius:12px} .pb.lg svg{width:26px; height:26px}
+  .prov{display:inline-flex; align-items:center; gap:7px; font-size:12px; color:var(--muted)}
+
+  /* track row */
+  .trk{display:flex; align-items:center; gap:13px; padding:9px 6px; border-radius:12px; cursor:pointer}
+  .trk:hover{background:var(--surface-2)}
+  .trk .art{width:46px; height:46px; border-radius:9px; flex:0 0 auto; background:var(--surface-3);
+    position:relative; overflow:hidden}
+  .trk .meta{min-width:0; flex:1}
+  .trk .t{font-size:15px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .trk .s{font-size:12.5px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .trk .right{display:flex; align-items:center; gap:9px; flex:0 0 auto}
+  .trk .dur{font-family:var(--mono); font-size:11.5px; color:var(--faint)}
+  .trk.locked{opacity:.62}
+  .lock{width:22px; height:22px; display:grid; place-items:center; color:var(--warn)}
+
+  /* section label */
+  .cf-sec{display:flex; align-items:center; justify-content:space-between; margin-top:6px}
+  .cf-sec h3{font-size:13px; font-family:var(--mono); letter-spacing:.12em; text-transform:uppercase; color:var(--faint)}
+
+  /* rows / cards for playlists (home) */
+  .cf-plrow{display:flex; align-items:center; gap:13px; padding:9px 6px; border-radius:12px; cursor:pointer}
+  .cf-plrow:hover{background:var(--surface-2)}
+  .cf-plcover{width:56px; height:56px; border-radius:12px; flex:0 0 auto; display:grid; place-items:center;
+    color:#fff; font-weight:800; font-size:20px}
+  .cf-plrow .info{flex:1; min-width:0}
+  .cf-plrow .info .n{font-size:15.5px; font-weight:650}
+  .cf-plrow .info .d{font-size:12.5px; color:var(--muted); display:flex; align-items:center; gap:8px; margin-top:3px; flex-wrap:wrap}
+
+  /* connect / service cards */
+  .svc{display:flex; align-items:center; gap:13px; padding:15px; border:1px solid var(--line);
+    border-radius:16px; background:var(--surface)}
+  .svc .info{flex:1; min-width:0}
+  .svc .info .n{font-size:15.5px; font-weight:650; display:flex; align-items:center; gap:8px}
+  .svc .info .m{font-size:12.5px; color:var(--muted); margin-top:3px; line-height:1.45}
+
+  /* search */
+  .cf-search{display:flex; align-items:center; gap:9px; background:var(--surface-2); border:1px solid var(--line);
+    border-radius:13px; padding:11px 13px; color:var(--muted); font-size:15px; cursor:text}
+  .cf-search input{border:none; background:none; outline:none; color:var(--text); font-size:15px; width:100%; font-family:var(--ui)}
+  .cf-chips{display:flex; gap:8px; flex-wrap:wrap}
+  .cf-chip{font-size:12.5px; padding:7px 12px; border-radius:999px; border:1px solid var(--line-2);
+    background:var(--surface); color:var(--muted); cursor:pointer; display:flex; align-items:center; gap:7px}
+  .cf-chip.on{color:var(--text); border-color:var(--violet); background:var(--violet-dim)}
+
+  /* onboarding */
+  .cf-hero-mark{width:78px; height:78px; margin:0 auto}
+  .cf-onb{padding:22px 22px 26px; display:flex; flex-direction:column; gap:16px; text-align:center; align-items:center; min-height:100%}
+  .cf-onb .big{font-size:30px; font-weight:800; letter-spacing:-.025em; line-height:1.08; text-wrap:balance}
+  .cf-onb .sub{color:var(--muted); font-size:14.5px; line-height:1.55; max-width:30ch}
+  .cf-feat{display:flex; gap:12px; text-align:left; align-items:flex-start; width:100%}
+  .cf-feat .ico{width:34px; height:34px; border-radius:10px; background:var(--violet-dim); color:var(--violet);
+    display:grid; place-items:center; flex:0 0 auto}
+  .cf-feat .ft{font-size:14px; font-weight:600} .cf-feat .fs{font-size:12.5px; color:var(--muted); line-height:1.45}
+  .cf-note{font-size:11.5px; color:var(--faint); line-height:1.5; display:flex; gap:8px; align-items:flex-start;
+    text-align:left; background:var(--surface); border:1px solid var(--line); padding:11px 12px; border-radius:12px; width:100%}
+
+  /* now playing */
+  .np{background:radial-gradient(120% 80% at 50% 0%, rgba(139,123,255,.22), transparent 60%), var(--screen);
+    min-height:100%; padding:6px 22px 24px; display:flex; flex-direction:column}
+  .np-art{width:100%; aspect-ratio:1; border-radius:22px; margin:8px 0 20px; position:relative; overflow:hidden;
+    box-shadow:0 30px 60px -24px rgba(0,0,0,.7)}
+  .np-title{font-size:23px; font-weight:800; letter-spacing:-.02em}
+  .np-artist{color:var(--muted); font-size:15px; margin-top:2px}
+  .np-src{display:inline-flex; align-items:center; gap:7px; font-size:11.5px; color:var(--muted);
+    font-family:var(--mono); margin-top:10px; border:1px solid var(--line); padding:5px 9px; border-radius:8px; align-self:flex-start}
+  .np-bar{height:4px; border-radius:3px; background:var(--surface-3); margin:18px 0 6px; position:relative}
+  .np-bar>i{position:absolute; left:0; top:0; bottom:0; width:38%; border-radius:3px; background:var(--text)}
+  .np-time{display:flex; justify-content:space-between; font-family:var(--mono); font-size:11px; color:var(--faint)}
+  .np-ctrl{display:flex; align-items:center; justify-content:center; gap:26px; margin:14px 0 4px}
+  .np-ctrl button{background:none; border:none; color:var(--text); cursor:pointer; display:grid; place-items:center}
+  .np-play{width:66px; height:66px; border-radius:50%; background:var(--text); color:var(--screen)!important;
+    box-shadow:0 12px 30px -8px rgba(0,0,0,.5)}
+
+  /* crossfader (signature) */
+  .xf{margin-top:22px; border:1px solid var(--line-2); border-radius:18px; padding:15px 16px 17px;
+    background:linear-gradient(180deg,var(--surface),var(--surface-2))}
+  .xf-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:13px}
+  .xf-lab{font-family:var(--mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--violet)}
+  .xf-hint{font-family:var(--mono); font-size:10.5px; color:var(--faint)}
+  .xf-rail{position:relative; height:34px; display:flex; align-items:center}
+  .xf-line{position:absolute; left:22px; right:22px; height:6px; border-radius:4px; background:var(--grad); opacity:.85}
+  .xf-end{position:relative; z-index:2}
+  .xf-end.right{margin-left:auto}
+  .xf-knob{position:absolute; top:50%; width:26px; height:26px; border-radius:50%; background:var(--text);
+    border:3px solid var(--screen); box-shadow:0 6px 16px -4px rgba(0,0,0,.6),0 0 0 4px var(--violet-dim);
+    transform:translate(-50%,-50%); left:64%; cursor:grab; z-index:3; touch-action:none}
+  .xf-knob:active{cursor:grabbing}
+  .xf-cap{display:flex; justify-content:space-between; margin-top:11px; font-size:11.5px; color:var(--muted)}
+  .xf-cap b{color:var(--text); font-weight:650}
+  @keyframes xf-pulse{0%,100%{box-shadow:0 6px 16px -4px rgba(0,0,0,.6),0 0 0 4px var(--violet-dim)}
+    50%{box-shadow:0 6px 16px -4px rgba(0,0,0,.6),0 0 0 8px rgba(139,123,255,.28)}}
+  .xf-knob{animation:xf-pulse 2.6s ease-in-out infinite}
+
+  /* mini player */
+  .cf-mini{flex:0 0 auto; margin:0 8px 6px; display:none; align-items:center; gap:11px; padding:9px 11px;
+    border-radius:15px; background:var(--surface-2); border:1px solid var(--line-2); cursor:pointer}
+  .cf-mini.on{display:flex}
+  .cf-mini .art{width:38px; height:38px; border-radius:9px; flex:0 0 auto}
+  .cf-mini .mm{flex:1; min-width:0}
+  .cf-mini .mt{font-size:13.5px; font-weight:650; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .cf-mini .ms{font-size:11.5px; color:var(--muted); display:flex; align-items:center; gap:6px}
+  .cf-mini .pp{width:34px; height:34px; border-radius:50%; display:grid; place-items:center; color:var(--text)}
+
+  /* tab bar */
+  .cf-tabs{flex:0 0 auto; height:76px; display:flex; padding:8px 6px 20px; gap:2px;
+    border-top:1px solid var(--line); background:color-mix(in srgb,var(--screen) 88%,transparent);
+    backdrop-filter:blur(12px)}
+  .cf-tab{flex:1; background:none; border:none; cursor:pointer; color:var(--faint); display:flex;
+    flex-direction:column; align-items:center; gap:3px; font-size:10.5px; font-weight:600; padding-top:4px}
+  .cf-tab svg{width:23px; height:23px}
+  .cf-tab.on{color:var(--violet)}
+
+  /* ---------- annotation rail ---------- */
+  .cf-rail{flex:1 1 300px; max-width:360px; min-width:270px; position:sticky; top:24px;
+    display:flex; flex-direction:column; gap:16px}
+  .cf-rail-card{background:var(--rail-bg); border:1px solid var(--line); border-radius:20px; padding:22px}
+  .cf-rail-eye{font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--violet)}
+  .cf-rail-title{font-size:20px; font-weight:800; letter-spacing:-.02em; margin:9px 0 4px; text-wrap:balance}
+  .cf-rail-req{display:inline-flex; align-items:center; gap:7px; font-family:var(--mono); font-size:11px;
+    color:var(--aqua); background:rgba(33,211,196,.1); border:1px solid rgba(33,211,196,.22);
+    padding:4px 9px; border-radius:8px; margin-bottom:12px}
+  .cf-rail-body{color:var(--muted); font-size:13.5px; line-height:1.6}
+  .cf-rail-reqs{display:flex; flex-direction:column; gap:9px}
+  .cf-rail-reqs .rq{display:flex; gap:10px; font-size:12.5px; color:var(--muted); line-height:1.4}
+  .cf-rail-reqs .rq b{color:var(--text); font-family:var(--mono); font-size:11px; flex:0 0 22px}
+  .cf-legend{display:flex; flex-wrap:wrap; gap:8px 14px; margin-top:4px}
+  .cf-legend span{display:inline-flex; align-items:center; gap:6px; font-size:11.5px; color:var(--muted)}
+  .cf-restart{align-self:flex-start; font-size:12.5px; color:var(--muted); background:none; border:1px solid var(--line-2);
+    padding:8px 13px; border-radius:10px; cursor:pointer; display:inline-flex; align-items:center; gap:7px}
+  .cf-restart:hover{color:var(--text); border-color:var(--violet)}
+  .cf-foot{width:100%; max-width:1040px; color:var(--faint); font-size:12px; line-height:1.6; text-align:center}
+
+  @media (max-width:880px){
+    .cf-rail{position:static; max-width:376px; width:100%; order:2}
+    .cf-proto{flex-direction:column; align-items:center}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important; transition:none!important}
+  }
+  :focus-visible{outline:2px solid var(--violet); outline-offset:2px; border-radius:6px}
+</style>
+
+<div class="cf-stage">
+  <div class="cf-top">
+    <div class="cf-logo">
+      <svg class="cf-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <defs><linearGradient id="cfg" x1="0" y1="0" x2="48" y2="48">
+          <stop offset="0" stop-color="#8b7bff"/><stop offset="1" stop-color="#21d3c4"/></linearGradient></defs>
+        <circle cx="18" cy="24" r="13" stroke="#8b7bff" stroke-width="3"/>
+        <circle cx="30" cy="24" r="13" stroke="url(#cfg)" stroke-width="3"/>
+        <circle cx="24" cy="24" r="5.4" fill="url(#cfg)"/>
+      </svg>
+      <div>
+        <div class="cf-word">Cross<b>fade</b></div>
+      </div>
+    </div>
+    <div class="cf-tagline">One library across every service you pay for. Build playlists that mix tracks from any platform — each song still plays from the service that owns it.</div>
+    <div class="cf-top-tag">Clickable prototype · mock data</div>
+  </div>
+
+  <div class="cf-proto">
+    <!-- ===================== DEVICE ===================== -->
+    <div class="cf-device">
+      <div class="cf-screen">
+        <div class="cf-notch"></div>
+        <div class="cf-status">
+          <span>9:41</span>
+          <span class="r" aria-hidden="true">
+            <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="4.5" y="4.5" width="3" height="7.5" rx="1"/><rect x="9" y="2" width="3" height="10" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1"/></svg>
+            <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><path d="M8 2.7C10 2.7 11.8 3.5 13.1 4.8L14.4 3.4C12.7 1.8 10.5 .8 8 .8S3.3 1.8 1.6 3.4L2.9 4.8C4.2 3.5 6 2.7 8 2.7Z"/><path d="M8 6.1C9 6.1 10 6.5 10.7 7.2L12 5.9C10.9 4.8 9.5 4.2 8 4.2S5.1 4.8 4 5.9L5.3 7.2C6 6.5 7 6.1 8 6.1Z"/><circle cx="8" cy="9.6" r="1.7"/></svg>
+            <svg width="26" height="13" viewBox="0 0 26 13" fill="none"><rect x="1" y="1" width="21" height="11" rx="3" stroke="currentColor" stroke-opacity=".5" stroke-width="1.2"/><rect x="2.6" y="2.6" width="16" height="7.8" rx="1.6" fill="currentColor"/><rect x="23.4" y="4" width="1.6" height="5" rx=".8" fill="currentColor" fill-opacity=".5"/></svg>
+          </span>
+        </div>
+
+        <div class="cf-view" id="cfView">
+
+          <!-- ============ ONBOARDING ============ -->
+          <section class="cf-page" id="p-onboarding">
+            <div class="cf-onb">
+              <svg class="cf-hero-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                <circle cx="18" cy="24" r="13" stroke="var(--violet)" stroke-width="3"/>
+                <circle cx="30" cy="24" r="13" stroke="url(#cfg)" stroke-width="3"/>
+                <circle cx="24" cy="24" r="5.4" fill="url(#cfg)"/>
+              </svg>
+              <div class="big">All your music.<br>One playlist.</div>
+              <div class="sub">Link the streaming services you already pay for and build playlists that mix tracks from any of them.</div>
+
+              <div style="display:flex; flex-direction:column; gap:15px; width:100%; margin-top:6px">
+                <div class="cf-feat"><div class="ico">‹›</div><div><div class="ft">Link the services you subscribe to</div><div class="fs">Apple Music, Spotify Premium, and more.</div></div></div>
+                <div class="cf-feat"><div class="ico">≋</div><div><div class="ft">Mixed playlists, one player</div><div class="fs">Each track plays from the service that owns it — you stay in Crossfade.</div></div></div>
+                <div class="cf-feat"><div class="ico">⇄</div><div><div class="ft">Import & keep in sync</div><div class="fs">Bring your existing playlists in; changes stay synced.</div></div></div>
+              </div>
+
+              <div style="flex:1"></div>
+              <button class="cf-btn" data-nav="connect" style="margin-top:8px">Connect a service</button>
+              <div class="cf-note"><span>ⓘ</span><span><b style="color:var(--text)">R1 — you bring the subscription.</b> Crossfade organizes and plays your music; it never provides the music itself. Playback needs an active plan on each service (Apple Music, Spotify Premium…).</span></div>
+            </div>
+          </section>
+
+          <!-- ============ CONNECT ============ -->
+          <section class="cf-page" id="p-connect">
+            <div class="cf-head">
+              <button class="cf-back" data-back aria-label="Back">‹</button>
+              <div class="cf-h1">Connect a service</div>
+            </div>
+            <div class="cf-body">
+              <div class="cf-eyebrow">Requirement R1 · provider requirements</div>
+              <div class="cf-muted">Choose a service to link. You'll authorize it with the provider, and Crossfade will check your plan. You can link a service even on a free tier — but playback needs the paid plan.</div>
+              <div id="connectList" style="display:flex; flex-direction:column; gap:11px; margin-top:4px"></div>
+            </div>
+          </section>
+
+          <!-- ============ SERVICES (R5) ============ -->
+          <section class="cf-page" id="p-services">
+            <div class="cf-head">
+              <div class="cf-h1">Supported services</div>
+            </div>
+            <div class="cf-body">
+              <div class="cf-eyebrow">Requirement R5 · top 5 US services</div>
+              <div class="cf-muted">The five most-used music streaming services in the US, and where each stands in Crossfade. Support depends on whether a service lets playback stay <b style="color:var(--text)">inside Crossfade</b>.</div>
+              <div class="cf-legend">
+                <span><span class="cf-dot" style="color:var(--ok)"></span>Live</span>
+                <span><span class="cf-dot" style="color:var(--plan)"></span>Coming next</span>
+                <span><span class="cf-dot" style="color:var(--warn)"></span>Investigating</span>
+                <span><span class="cf-dot" style="color:var(--no)"></span>Not supported</span>
+              </div>
+              <div id="servicesList" style="display:flex; flex-direction:column; gap:11px; margin-top:2px"></div>
+            </div>
+          </section>
+
+          <!-- ============ HOME / LIBRARY ============ -->
+          <section class="cf-page" id="p-home">
+            <div class="cf-head">
+              <div class="cf-h1">Library</div>
+              <div class="cf-head-action">
+                <button class="cf-btn ghost sm" data-nav="import">⤓ Import</button>
+              </div>
+            </div>
+            <div class="cf-body">
+              <div class="cf-sec"><h3>Your playlists</h3></div>
+              <div id="playlistList" style="display:flex; flex-direction:column; gap:2px"></div>
+              <div class="cf-sec" style="margin-top:14px"><h3>Recently played</h3></div>
+              <div id="recentList" style="display:flex; flex-direction:column; gap:2px"></div>
+            </div>
+          </section>
+
+          <!-- ============ IMPORT (R2) ============ -->
+          <section class="cf-page" id="p-import">
+            <div class="cf-head">
+              <button class="cf-back" data-back aria-label="Back">‹</button>
+              <div class="cf-h1">Import playlists</div>
+            </div>
+            <div class="cf-body">
+              <div class="cf-eyebrow">Requirement R2 · kept in sync</div>
+              <div class="cf-muted">Import playlists from a linked service. Imported playlists stay <b style="color:var(--text)">linked to the source</b> — when the original changes, Crossfade updates too.</div>
+              <div class="cf-chips" id="importSourceChips" style="margin-top:4px"></div>
+              <div id="importList" style="display:flex; flex-direction:column; gap:2px; margin-top:4px"></div>
+            </div>
+          </section>
+
+          <!-- ============ SEARCH (R3) ============ -->
+          <section class="cf-page" id="p-search">
+            <div class="cf-head"><div class="cf-h1">Search</div></div>
+            <div class="cf-body">
+              <div class="cf-search" id="searchBox"><span aria-hidden="true">⌕</span><input id="searchInput" placeholder="Search across all your services" value="midnight"></div>
+              <div class="cf-eyebrow">Requirement R3 · one search, every platform</div>
+              <div class="cf-chips" id="searchScope"></div>
+              <div class="cf-muted" style="margin-top:2px" id="searchNote"></div>
+              <div id="searchResults" style="display:flex; flex-direction:column; gap:2px; margin-top:2px"></div>
+            </div>
+          </section>
+
+          <!-- ============ PLAYLIST DETAIL (R4) ============ -->
+          <section class="cf-page" id="p-playlist">
+            <div class="cf-head">
+              <button class="cf-back" data-back aria-label="Back">‹</button>
+              <div class="cf-h1" id="plTitle">Playlist</div>
+            </div>
+            <div class="cf-body">
+              <div id="plHeader"></div>
+              <button class="cf-btn grad" id="plPlay">▶ Play</button>
+              <div class="cf-eyebrow" style="margin-top:6px">Requirement R4 · every track shows its source</div>
+              <div id="plTracks" style="display:flex; flex-direction:column; gap:2px"></div>
+            </div>
+          </section>
+
+          <!-- ============ NOW PLAYING ============ -->
+          <section class="cf-page" id="p-nowplaying">
+            <div class="cf-head" style="background:transparent">
+              <button class="cf-back" data-back aria-label="Back">⌄</button>
+              <div class="cf-eyebrow" style="margin:0 auto">Now Playing</div>
+              <div style="width:34px"></div>
+            </div>
+            <div class="np">
+              <div class="np-art" id="npArt"></div>
+              <div class="np-title" id="npTitle">—</div>
+              <div class="np-artist" id="npArtist">—</div>
+              <div class="np-src" id="npSrc"></div>
+              <div class="np-bar"><i></i></div>
+              <div class="np-time"><span>1:12</span><span>-2:05</span></div>
+              <div class="np-ctrl">
+                <button aria-label="Previous"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg></button>
+                <button class="np-play" id="npPlay" aria-label="Pause"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1.2"/><rect x="14" y="5" width="4" height="14" rx="1.2"/></svg></button>
+                <button aria-label="Next"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M16 5h2v14h-2zM4 5l11 7-11 7z"/></svg></button>
+              </div>
+
+              <!-- SIGNATURE: the crossfader / conductor handoff -->
+              <div class="xf">
+                <div class="xf-top"><span class="xf-lab">Crossfade · handoff</span><span class="xf-hint" id="xfHint">72% → Spotify</span></div>
+                <div class="xf-rail">
+                  <div class="xf-line"></div>
+                  <div class="xf-end" id="xfLeft"></div>
+                  <div class="xf-end right" id="xfRight"></div>
+                  <div class="xf-knob" id="xfKnob" role="slider" aria-label="Crossfade handoff point" aria-valuenow="72" tabindex="0"></div>
+                </div>
+                <div class="xf-cap"><span>Now: <b id="xfNow">Apple Music</b></span><span>Up next: <b id="xfNext">Spotify</b></span></div>
+              </div>
+              <div class="cf-muted" style="font-size:11.5px; margin-top:14px; text-align:center">
+                Audio is sourced from each track's own service. Crossfade conducts the handoff so you never leave the app.
+              </div>
+            </div>
+          </section>
+
+          <!-- ============ SETTINGS ============ -->
+          <section class="cf-page" id="p-settings">
+            <div class="cf-head"><div class="cf-h1">Settings</div></div>
+            <div class="cf-body">
+              <div class="cf-sec"><h3>Linked services</h3></div>
+              <div class="cf-muted" style="margin-top:-4px">Manage the services you've connected. A service can be linked without the required plan — you just can't play from it yet (R1).</div>
+              <div id="settingsLinks" style="display:flex; flex-direction:column; gap:11px; margin-top:6px"></div>
+              <button class="cf-btn ghost sm" data-nav="connect" style="align-self:flex-start; margin-top:4px">+ Connect another</button>
+              <div class="cf-sec" style="margin-top:16px"><h3>Privacy</h3></div>
+              <div class="cf-card cf-muted">Crossfade stores playlists and track references — never audio. Disconnecting a service deletes its stored tokens and cached library. <span style="color:var(--violet)">Export or delete my data ›</span></div>
+            </div>
+          </section>
+
+        </div><!-- /view -->
+
+        <!-- mini player -->
+        <div class="cf-mini" id="miniPlayer" data-nav="nowplaying">
+          <div class="art" id="miniArt"></div>
+          <div class="mm"><div class="mt" id="miniTitle">—</div><div class="ms" id="miniSub">—</div></div>
+          <button class="pp" id="miniPlay" aria-label="Pause"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1.2"/><rect x="14" y="5" width="4" height="14" rx="1.2"/></svg></button>
+        </div>
+
+        <!-- tab bar -->
+        <nav class="cf-tabs">
+          <button class="cf-tab" data-tab="home" data-nav="home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>Library</button>
+          <button class="cf-tab" data-tab="search" data-nav="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>Search</button>
+          <button class="cf-tab" data-tab="services" data-nav="services">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="8" cy="12" r="4.4"/><circle cx="16" cy="12" r="4.4"/></svg>Services</button>
+          <button class="cf-tab" data-tab="settings" data-nav="settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v2.5M12 18.5V21M4.2 7.5l2.2 1.3M17.6 15.2l2.2 1.3M4.2 16.5l2.2-1.3M17.6 8.8l2.2-1.3"/></svg>Settings</button>
+        </nav>
+
+      </div><!-- /screen -->
+    </div><!-- /device -->
+
+    <!-- ===================== RAIL ===================== -->
+    <aside class="cf-rail">
+      <div class="cf-rail-card">
+        <div class="cf-rail-eye" id="railEye">Screen 1 / 8</div>
+        <div class="cf-rail-title" id="railTitle">Onboarding</div>
+        <div class="cf-rail-req" id="railReq">R1 · provider requirements</div>
+        <div class="cf-rail-body" id="railBody">Crossfade sits on top of the subscriptions you already pay for.</div>
+      </div>
+      <div class="cf-rail-card">
+        <div class="cf-rail-eye">Requirements in this build</div>
+        <div class="cf-rail-title" style="font-size:15px; margin:10px 0 12px">Tap through to see each one ↴</div>
+        <div class="cf-rail-reqs">
+          <div class="rq"><b>R1</b><span>Provider requirements enforced (subscription needed to play)</span></div>
+          <div class="rq"><b>R2</b><span>Import existing playlists — kept in sync</span></div>
+          <div class="rq"><b>R3</b><span>Search across every linked platform</span></div>
+          <div class="rq"><b>R4</b><span>Every track badged with its provider</span></div>
+          <div class="rq"><b>R5</b><span>Browse the top-5 US services & their support</span></div>
+        </div>
+      </div>
+      <button class="cf-restart" id="restartBtn">↺ Restart walkthrough</button>
+    </aside>
+  </div>
+
+  <div class="cf-foot">Prototype for direction only — mock data, no real streaming connections. Provider marks are stylized placeholders, not official logos. · Crossfade (working name)</div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  /* ---------------- provider marks (stylized, brand-colored) ---------------- */
+  var P = {
+    applemusic:{name:"Apple Music", short:"Apple Music", grad:["#FB5C74","#FA243C"],
+      svg:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 5.5 9.5 7v8.2a3 3 0 1 0 1.5 2.6V10l4-1v4.2a3 3 0 1 0 1.5 2.6V5.5z"/></svg>'},
+    spotify:{name:"Spotify", short:"Spotify", solid:"#1DB954",
+      svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9.5c4-1 8-.6 11.5 1.2M6.8 13c3.2-.8 6.4-.4 9.2 1.2M7.4 16.2c2.5-.6 4.9-.3 7 1"/></svg>'},
+    amazon:{name:"Amazon Music", short:"Amazon", solid:"#25C0D5",
+      svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6.5v8a2.2 2.2 0 1 1-1.5-2.1M8 9.5c2.6-1.4 5-1 6.5.5"/><path d="M5.5 17.5c3.6 1.8 7.4 1.8 11-.2" stroke-width="1.7"/></svg>'},
+    youtube:{name:"YouTube Music", short:"YT Music", solid:"#FF3B30",
+      svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="8"/><path d="M10 8.5 16 12l-6 3.5z" fill="currentColor" stroke="none"/></svg>'},
+    pandora:{name:"Pandora", short:"Pandora", solid:"#4B6CF0",
+      svg:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h5.5a5 5 0 0 1 0 10H10v6H7z M10 7v4h2.2a2 2 0 0 0 0-4z"/></svg>'}
+  };
+  function pbBg(k){var p=P[k]; return p.grad?("linear-gradient(145deg,"+p.grad[0]+","+p.grad[1]+")"):p.solid;}
+  function badge(k,cls){var p=P[k]; return '<span class="pb '+(cls||"")+'" style="background:'+pbBg(k)+'" title="'+p.name+'">'+p.svg+'</span>';}
+  function prov(k){return '<span class="prov">'+badge(k)+P[k].short+'</span>';}
+
+  /* ---------------- mock data ---------------- */
+  // linkage state: subscribed => can play; linked but !subscribed => R1 blocked
+  var services = {
+    applemusic:{status:"live",  linked:true,  subscribed:true,  plan:"Individual",
+      blurb:"Plays fully inside Crossfade (MusicKit). First supported service."},
+    spotify:{status:"plan",     linked:true,  subscribed:false, plan:"Free",
+      blurb:"Coming next. Plays in-app via the Spotify app in the background — Premium required."},
+    amazon:{status:"warn",      linked:false, subscribed:false, plan:null,
+      blurb:"Under investigation — confirming an in-app playback path that keeps you in Crossfade."},
+    youtube:{status:"no",       linked:false, subscribed:false, plan:null,
+      blurb:"Not supported: no compliant in-app playback — it would push you out to the YouTube Music app."},
+    pandora:{status:"no",       linked:false, subscribed:false, plan:null,
+      blurb:"Not supported: no third-party playback available to keep listening inside Crossfade."}
+  };
+  var statusPill = {
+    live:'<span class="cf-pill ok"><span class="cf-dot"></span>Live</span>',
+    plan:'<span class="cf-pill plan"><span class="cf-dot"></span>Coming next</span>',
+    warn:'<span class="cf-pill warn"><span class="cf-dot"></span>Investigating</span>',
+    no:'<span class="cf-pill no"><span class="cf-dot"></span>Not supported</span>'
+  };
+  var order5 = ["spotify","applemusic","amazon","youtube","pandora"];
+
+  function art(c1,c2){return 'background:linear-gradient(140deg,'+c1+','+c2+')';}
+  var playlists = [
+    {id:"drive", name:"Late Night Drive", cover:["#3a2b6b","#8b7bff"], synced:"spotify",
+     desc:'Imported from Spotify · <span style="color:var(--aqua)">Synced</span> · 18 songs',
+     tracks:[
+       {t:"Midnight Signal", a:"Sable Court", src:"applemusic", d:"3:42"},
+       {t:"Neon Tide", a:"The Wavelengths", src:"spotify", d:"4:05", locked:true},
+       {t:"Slow Headlights", a:"Aster Vale", src:"applemusic", d:"3:18"},
+       {t:"Coast Road", a:"Nova Divide", src:"spotify", d:"3:51", locked:true},
+       {t:"After Hours Blue", a:"Marlow", src:"applemusic", d:"4:22"}
+     ]},
+    {id:"focus", name:"Focus Flow", cover:["#123a3a","#21d3c4"], synced:null,
+     desc:"Made in Crossfade · 24 songs",
+     tracks:[
+       {t:"Paper Lanterns", a:"Ilse Renn", src:"applemusic", d:"5:12"},
+       {t:"Long Exposure", a:"Kessler", src:"applemusic", d:"4:44"},
+       {t:"Quiet Machine", a:"Halden Bloom", src:"applemusic", d:"3:59"}
+     ]}
+  ];
+  var recent = [
+    {t:"Midnight Signal", a:"Sable Court", src:"applemusic", d:"3:42"},
+    {t:"Coast Road", a:"Nova Divide", src:"spotify", d:"3:51", locked:true},
+    {t:"Paper Lanterns", a:"Ilse Renn", src:"applemusic", d:"5:12"}
+  ];
+  var searchResults = [
+    {t:"Midnight Signal", a:"Sable Court", src:"applemusic", d:"3:42"},
+    {t:"Midnight Signal", a:"Sable Court", src:"spotify", d:"3:42", locked:true, dupe:true},
+    {t:"Midnight City Lights", a:"Aster Vale", src:"applemusic", d:"3:28"},
+    {t:"Midnight in Motion", a:"The Wavelengths", src:"spotify", d:"4:10", locked:true},
+    {t:"Past Midnight", a:"Marlow", src:"applemusic", d:"3:05"}
+  ];
+  var importable = {
+    spotify:[
+      {n:"Late Night Drive", c:22, imported:true},
+      {n:"Gym Reset", c:31, imported:false},
+      {n:"Rainy Sunday", c:15, imported:false}
+    ],
+    applemusic:[
+      {n:"Heavy Rotation", c:40, imported:false},
+      {n:"Road Trip 2025", c:64, imported:false}
+    ]
+  };
+
+  /* ---------------- rail copy per screen ---------------- */
+  var rail = {
+    onboarding:{n:1,t:"Onboarding",r:"R1 · provider requirements",b:"Crossfade is an organizer on top of the subscriptions you already pay for — it never supplies the music itself. The first thing it sets: playback needs your own plan."},
+    connect:{n:2,t:"Connect a service",r:"R1 · provider requirements",b:"Linking authorizes with the provider and checks your plan. You can link on a free tier, but Crossfade marks it play-blocked until you have the paid plan."},
+    services:{n:3,t:"Supported services",r:"R5 · top 5 US services",b:"The five biggest US services with a clear support status. What decides it: whether the service lets playback stay inside Crossfade, per the in-app-first policy."},
+    home:{n:4,t:"Library",r:"R2 + R4 · sync & provider badges",b:"Imported playlists show a Synced badge (R2). Every track carries its provider's mark (R4), so you always know what will play it."},
+    import:{n:5,t:"Import playlists",r:"R2 · kept in sync",b:"Pick a linked service and import its playlists. They stay linked to the source — later changes flow into Crossfade automatically."},
+    search:{n:6,t:"Search",r:"R3 · one search, every platform",b:"One query fans out to every linked service. Results are deduplicated by recording, and anything you can't play (wrong plan) is flagged — not hidden."},
+    playlist:{n:7,t:"Playlist detail",r:"R4 · source on every track",b:"A single playlist mixing tracks from different services. Each row is badged with its provider; play-blocked tracks show a lock (R1)."},
+    nowplaying:{n:7,t:"Now Playing",r:"The conductor",b:"Audio comes from each track's own service. The crossfader visualizes the handoff between services — you never leave Crossfade. Drag the knob."},
+    settings:{n:8,t:"Settings",r:"R1 · manage links",b:"Linked services and their play state. Apple Music is subscribed and playable; Spotify is linked on Free, so it's play-blocked until upgraded."}
+  };
+
+  /* ---------------- rendering ---------------- */
+  var $ = function(id){return document.getElementById(id);};
+  function trackRow(x, onClick){
+    var lock = x.locked ? '<span class="lock" title="Play needs the paid plan">🔒</span>' : '';
+    var el = document.createElement('div');
+    el.className = 'trk'+(x.locked?' locked':'');
+    el.innerHTML =
+      '<div class="art" style="'+art('#2a2f3a','#171a22')+'"></div>'+
+      '<div class="meta"><div class="t">'+x.t+'</div><div class="s">'+x.a+(x.dupe?' · also on Apple Music':'')+'</div></div>'+
+      '<div class="right">'+badge(x.src)+lock+'<span class="dur">'+x.d+'</span></div>';
+    if(onClick) el.addEventListener('click', onClick);
+    return el;
+  }
+
+  function renderServices(){
+    var wrap = $('servicesList'); wrap.innerHTML='';
+    order5.forEach(function(k){
+      var s = services[k];
+      var d = document.createElement('div'); d.className='svc';
+      d.innerHTML = badge(k,'lg')+
+        '<div class="info"><div class="n">'+P[k].name+' '+statusPill[s.status]+'</div>'+
+        '<div class="m">'+s.blurb+'</div></div>';
+      wrap.appendChild(d);
+    });
+  }
+  function renderConnect(){
+    var wrap = $('connectList'); wrap.innerHTML='';
+    order5.forEach(function(k){
+      var s=services[k]; var playable = s.status==='live'||s.status==='plan';
+      var d=document.createElement('div'); d.className='svc';
+      var action = s.linked
+        ? '<span class="cf-pill '+(s.subscribed?'ok':'warn')+'">'+(s.subscribed?'Linked':'Linked · no plan')+'</span>'
+        : (playable ? '<button class="cf-btn sm" data-connect="'+k+'">Connect</button>'
+                    : '<span class="cf-pill no">Unavailable</span>');
+      d.innerHTML = badge(k,'lg')+'<div class="info"><div class="n">'+P[k].name+'</div>'+
+        '<div class="m">'+(s.status==='live'?'Plays in-app':s.status==='plan'?'In-app via background':'Not yet supported')+'</div></div>'+
+        '<div style="flex:0 0 auto">'+action+'</div>';
+      wrap.appendChild(d);
+    });
+    wrap.querySelectorAll('[data-connect]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var k=b.getAttribute('data-connect');
+        b.textContent='Authorizing…'; b.disabled=true;
+        setTimeout(function(){
+          services[k].linked=true;
+          if(k==='spotify') services[k].subscribed=false; else services[k].subscribed=true;
+          renderConnect(); renderSettings();
+          go('home');
+        }, 850);
+      });
+    });
+  }
+  function renderPlaylistsHome(){
+    var wrap=$('playlistList'); wrap.innerHTML='';
+    playlists.forEach(function(pl){
+      var d=document.createElement('div'); d.className='cf-plrow';
+      var sync = pl.synced ? '<span class="cf-pill ok" style="padding:2px 6px">⇄ Synced</span>' : '';
+      d.innerHTML='<div class="cf-plcover" style="'+art(pl.cover[0],pl.cover[1])+'">'+pl.name[0]+'</div>'+
+        '<div class="info"><div class="n">'+pl.name+'</div><div class="d">'+pl.desc+' '+sync+'</div></div>'+
+        '<span style="color:var(--faint)">›</span>';
+      d.addEventListener('click', function(){ openPlaylist(pl.id); });
+      wrap.appendChild(d);
+    });
+    var rec=$('recentList'); rec.innerHTML='';
+    recent.forEach(function(x){ rec.appendChild(trackRow(x, function(){ playTrack(x); })); });
+  }
+  function renderImport(){
+    var chips=$('importSourceChips'); chips.innerHTML='';
+    var sources = Object.keys(importable).filter(function(k){return services[k].linked;});
+    var active = renderImport._active || sources[0];
+    renderImport._active = active;
+    sources.forEach(function(k){
+      var c=document.createElement('button'); c.className='cf-chip'+(k===active?' on':'');
+      c.innerHTML=badge(k)+P[k].short;
+      c.addEventListener('click', function(){ renderImport._active=k; renderImport(); });
+      chips.appendChild(c);
+    });
+    var list=$('importList'); list.innerHTML='';
+    (importable[active]||[]).forEach(function(pl){
+      var d=document.createElement('div'); d.className='trk';
+      var btn = pl.imported
+        ? '<span class="cf-pill ok">⇄ Synced</span>'
+        : '<button class="cf-btn sm">Import</button>';
+      d.innerHTML='<div class="cf-plcover" style="width:44px;height:44px;border-radius:10px;font-size:16px;'+art('#2a2f3a','#3a2b6b')+'">'+pl.n[0]+'</div>'+
+        '<div class="meta"><div class="t">'+pl.n+'</div><div class="s">'+pl.c+' songs · '+P[active].short+'</div></div>'+
+        '<div class="right">'+btn+'</div>';
+      var b=d.querySelector('button');
+      if(b) b.addEventListener('click', function(){
+        b.textContent='Importing…'; b.disabled=true;
+        setTimeout(function(){ pl.imported=true; renderImport(); }, 700);
+      });
+      list.appendChild(d);
+    });
+  }
+  function renderSearch(){
+    var scope=$('searchScope'); scope.innerHTML='';
+    ['applemusic','spotify'].forEach(function(k){
+      var c=document.createElement('span'); c.className='cf-chip on'; c.innerHTML=badge(k)+P[k].short;
+      scope.appendChild(c);
+    });
+    var linked=document.createElement('span'); linked.className='cf-chip';
+    linked.textContent='+ add service'; scope.appendChild(linked);
+    $('searchNote').innerHTML='Showing results from your <b style="color:var(--text)">2 linked services</b>. Duplicates are merged; play-blocked results are flagged.';
+    var res=$('searchResults'); res.innerHTML='';
+    searchResults.forEach(function(x){ res.appendChild(trackRow(x, function(){ if(!x.locked) playTrack(x); })); });
+  }
+  function renderSettings(){
+    var wrap=$('settingsLinks'); wrap.innerHTML='';
+    order5.forEach(function(k){
+      if(!services[k].linked) return;
+      var s=services[k];
+      var state = s.subscribed
+        ? '<span class="cf-pill ok"><span class="cf-dot"></span>Playable · '+s.plan+'</span>'
+        : '<span class="cf-pill warn"><span class="cf-dot"></span>'+s.plan+' · play-blocked</span>';
+      var d=document.createElement('div'); d.className='svc';
+      d.innerHTML=badge(k,'lg')+'<div class="info"><div class="n">'+P[k].name+'</div>'+
+        '<div class="m" style="margin-top:5px">'+state+(s.subscribed?'':' <span style="color:var(--violet)">· Upgrade</span>')+'</div></div>';
+      wrap.appendChild(d);
+    });
+  }
+  var plCurrent=null;
+  function openPlaylist(id){
+    var pl=playlists.filter(function(p){return p.id===id;})[0]; if(!pl) return;
+    plCurrent=pl;
+    $('plTitle').textContent=pl.name;
+    var srcSet={}; pl.tracks.forEach(function(t){srcSet[t.src]=1;});
+    var srcs=Object.keys(srcSet).map(function(k){return badge(k);}).join('');
+    $('plHeader').innerHTML=
+      '<div style="display:flex; gap:14px; align-items:center; margin-bottom:6px">'+
+        '<div class="cf-plcover" style="width:76px;height:76px;border-radius:16px;font-size:28px;'+art(pl.cover[0],pl.cover[1])+'">'+pl.name[0]+'</div>'+
+        '<div><div style="font-size:12.5px;color:var(--muted)">'+pl.desc+'</div>'+
+        '<div style="display:flex;gap:5px;margin-top:8px;align-items:center"><span style="font-size:11.5px;color:var(--faint);font-family:var(--mono)">SOURCES</span>'+srcs+'</div></div>'+
+      '</div>';
+    var tw=$('plTracks'); tw.innerHTML='';
+    pl.tracks.forEach(function(x){ tw.appendChild(trackRow(x, function(){ if(!x.locked) playTrack(x); })); });
+    go('playlist');
+  }
+
+  /* ---------------- playback (mock) ---------------- */
+  var playing=null;
+  function playTrack(x){
+    playing=x;
+    $('miniPlayer').classList.add('on');
+    $('miniArt').style.cssText='background:linear-gradient(140deg,#2a2f3a,#171a22)';
+    $('miniTitle').textContent=x.t;
+    $('miniSub').innerHTML=prov(x.src)+' · '+x.a;
+    // now playing
+    $('npArt').style.cssText='background:linear-gradient(140deg,'+pbBg(x.src)+',#171a22)';
+    $('npTitle').textContent=x.t;
+    $('npArtist').textContent=x.a;
+    $('npSrc').innerHTML=badge(x.src)+'Playing from '+P[x.src].name;
+    // crossfade ends reflect current + a plausible "next" from the other service
+    var next = x.src==='applemusic' ? 'spotify' : 'applemusic';
+    $('xfLeft').innerHTML=badge(x.src,'');
+    $('xfRight').innerHTML=badge(next,'');
+    $('xfNow').textContent=P[x.src].name;
+    $('xfNext').textContent=P[next].name;
+    setPlayIcon(true);
+  }
+  function setPlayIcon(isPlaying){
+    var pause='<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1.2"/><rect x="14" y="5" width="4" height="14" rx="1.2"/></svg>';
+    var play='<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l12-7.5z"/></svg>';
+    var pauseS='<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1.2"/><rect x="14" y="5" width="4" height="14" rx="1.2"/></svg>';
+    var playS='<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l12-7.5z"/></svg>';
+    $('npPlay').innerHTML=isPlaying?pause:play;
+    $('miniPlay').innerHTML=isPlaying?pauseS:playS;
+    setPlayIcon._on=isPlaying;
+  }
+  function togglePlay(e){ if(e)e.stopPropagation(); if(!playing) return; setPlayIcon(!setPlayIcon._on); }
+
+  /* ---------------- navigation ---------------- */
+  var tabFor={home:'home',search:'search',services:'services',settings:'settings'};
+  var histStack=[];
+  function setRail(id){
+    var r=rail[id]||rail.home;
+    $('railEye').textContent='Screen '+r.n+' / 8';
+    $('railTitle').textContent=r.t;
+    $('railReq').textContent=r.r;
+    $('railBody').textContent=r.b;
+  }
+  function go(id, isBack){
+    var pages=document.querySelectorAll('.cf-page');
+    var cur=document.querySelector('.cf-page.active');
+    if(cur){
+      var curId=cur.id.replace('p-','');
+      if(!isBack && curId!==id) histStack.push(curId);
+    }
+    pages.forEach(function(p){p.classList.remove('active');});
+    var tgt=$('p-'+id); if(!tgt){tgt=$('p-home'); id='home';}
+    tgt.classList.add('active');
+    $('cfView').scrollTop=0;
+    document.querySelectorAll('.cf-tab').forEach(function(t){
+      t.classList.toggle('on', t.getAttribute('data-tab')===tabFor[id]);
+    });
+    setRail(id);
+    if(id==='connect') renderConnect();
+    if(id==='import') renderImport();
+    if(id==='settings') renderSettings();
+  }
+  function back(){ var prev=histStack.pop(); go(prev||'home', true); }
+
+  document.addEventListener('click', function(e){
+    var nav=e.target.closest('[data-nav]');
+    if(nav){ go(nav.getAttribute('data-nav')); return; }
+    var bk=e.target.closest('[data-back]');
+    if(bk){ back(); return; }
+  });
+  $('miniPlay').addEventListener('click', togglePlay);
+  $('npPlay').addEventListener('click', togglePlay);
+  $('plPlay').addEventListener('click', function(){
+    if(plCurrent){ var first=plCurrent.tracks.filter(function(t){return !t.locked;})[0]||plCurrent.tracks[0]; playTrack(first); go('nowplaying'); }
+  });
+  $('restartBtn').addEventListener('click', function(){
+    histStack=[]; playing=null; $('miniPlayer').classList.remove('on'); go('onboarding');
+  });
+
+  /* crossfader knob drag */
+  (function(){
+    var knob=$('xfKnob'); if(!knob) return; var rail=knob.parentNode; var dragging=false;
+    function setFrom(clientX){
+      var b=rail.getBoundingClientRect();
+      var pct=Math.max(6,Math.min(94,((clientX-b.left)/b.width)*100));
+      knob.style.left=pct+'%'; knob.style.animation='none';
+      var np=$('npSrc').textContent||''; var next=$('xfNext').textContent;
+      $('xfHint').textContent=Math.round(pct)+'% → '+next;
+      knob.setAttribute('aria-valuenow',Math.round(pct));
+    }
+    function down(e){dragging=true; knob.style.cursor='grabbing'; (e.touches?setFrom(e.touches[0].clientX):setFrom(e.clientX)); e.preventDefault();}
+    function move(e){if(!dragging)return; setFrom(e.touches?e.touches[0].clientX:e.clientX);}
+    function up(){dragging=false; knob.style.cursor='grab';}
+    knob.addEventListener('mousedown',down); knob.addEventListener('touchstart',down,{passive:false});
+    window.addEventListener('mousemove',move); window.addEventListener('touchmove',move,{passive:false});
+    window.addEventListener('mouseup',up); window.addEventListener('touchend',up);
+    knob.addEventListener('keydown',function(e){
+      var cur=parseFloat(knob.style.left)||64;
+      if(e.key==='ArrowLeft'){cur=Math.max(6,cur-4);} else if(e.key==='ArrowRight'){cur=Math.min(94,cur+4);} else return;
+      knob.style.left=cur+'%'; knob.style.animation='none'; $('xfHint').textContent=Math.round(cur)+'% → '+$('xfNext').textContent;
+      knob.setAttribute('aria-valuenow',Math.round(cur)); e.preventDefault();
+    });
+  })();
+
+  /* ---------------- boot ---------------- */
+  renderServices(); renderPlaylistsHome(); renderSearch();
+  // seed a now-playing so mini/crossfader are populated when first opened
+  playTrack({t:"Midnight Signal", a:"Sable Court", src:"applemusic", d:"3:42"});
+  $('miniPlayer').classList.remove('on'); setPlayIcon(false);
+  go('onboarding');
+})();
+</script>
+<title>Crossfade — Prototype</title>
+
+</body>
+</html>

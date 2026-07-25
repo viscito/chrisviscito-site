@@ -49,6 +49,15 @@ That single constraint drives the entire architecture. See
 
 ---
 
+## Clickable prototype
+
+A working, clickable mobile prototype (mock data — no real streaming
+connections) lives in [`prototype/index.html`](./prototype/index.html). Open it
+in a browser and tap through: onboarding, the supported-services browser, the
+library, cross-platform search, playlist import, a mixed-service playlist, and
+Now Playing with the signature "crossfader" handoff. Each screen maps to a
+requirement (R1–R5) via the annotation rail.
+
 ## Documents in this folder
 
 1. **[`PRODUCT_SPEC.md`](./PRODUCT_SPEC.md)** — what we're building and for whom:
