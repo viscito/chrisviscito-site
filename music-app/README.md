@@ -65,6 +65,13 @@ A Swift skeleton that turns the architecture into compiling structure lives in
 (`CrossfadeKit` — the conductor, data model, matching engine) and the iOS layer
 (`CrossfadeApp` — SwiftUI + a MusicKit adapter). See [`ios/README.md`](./ios/README.md).
 
+## Backend
+
+Server-side specs live in [`backend/`](./backend/). First up:
+[`backend/TOKEN_SERVICE.md`](./backend/TOKEN_SERVICE.md) — the credential & token
+service that signs Apple Music developer tokens, vends what MusicKit needs, stores
+user tokens securely, and generalizes to a per-service credential broker.
+
 ## Documents in this folder
 
 1. **[`PRODUCT_SPEC.md`](./PRODUCT_SPEC.md)** — what we're building and for whom:

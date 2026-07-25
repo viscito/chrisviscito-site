@@ -76,11 +76,16 @@ library, and plays it end-to-end in-app.
   `PlaybackAdapter` conductor, data model, matching engine (unit-tested), the R5
   registry, and a SwiftUI app with a MusicKit `AppleMusicAdapter`.
 
+- ✅ **Token/credential service spec** — [`backend/TOKEN_SERVICE.md`](./backend/TOKEN_SERVICE.md):
+  Apple Music developer-token signing, token vending for MusicKit, secure user-token
+  storage, and the general credential-broker interface.
+
 ## What I can produce next (pick any)
 
+- Implement the **token service** from the spec (a small TypeScript BFF).
 - Implement the **kept-in-sync reconciliation engine** (R2) in `CrossfadeKit`.
-- A **backend API contract** (endpoints + request/response schemas) for Phase 1,
-  including the developer-token-minting service.
+- The **full Phase-1 API contract** (playlists, unified library, sync jobs) beyond
+  the token service.
 - Wire the **real MusicKit path** end-to-end (developer-token service + entitlement).
 - A **landing / waitlist page** to validate demand before building.
 - A deeper **Apple Music integration spec** (exact endpoints, token-signing
