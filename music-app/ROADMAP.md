@@ -69,12 +69,19 @@ library, and plays it end-to-end in-app.
 
 ---
 
+## Built so far
+
+- ✅ **Clickable prototype** (mock data) — [`prototype/`](./prototype/).
+- ✅ **Swift skeleton** — [`ios/`](./ios/): the `PlaybackCoordinator` /
+  `PlaybackAdapter` conductor, data model, matching engine (unit-tested), the R5
+  registry, and a SwiftUI app with a MusicKit `AppleMusicAdapter`.
+
 ## What I can produce next (pick any)
 
-- A **clickable prototype** (mock data) of the Apple Music MVP screens.
-- A **backend API contract** (endpoints + request/response schemas) for Phase 1.
-- A concrete **Swift/SwiftUI project skeleton** with the `PlaybackAdapter` /
-  `PlaybackCoordinator` interfaces stubbed.
+- Implement the **kept-in-sync reconciliation engine** (R2) in `CrossfadeKit`.
+- A **backend API contract** (endpoints + request/response schemas) for Phase 1,
+  including the developer-token-minting service.
+- Wire the **real MusicKit path** end-to-end (developer-token service + entitlement).
 - A **landing / waitlist page** to validate demand before building.
 - A deeper **Apple Music integration spec** (exact endpoints, token-signing
   reference, error/rate-limit handling).

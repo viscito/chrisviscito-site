@@ -58,6 +58,13 @@ library, cross-platform search, playlist import, a mixed-service playlist, and
 Now Playing with the signature "crossfader" handoff. Each screen maps to a
 requirement (R1–R5) via the annotation rail.
 
+## iOS skeleton
+
+A Swift skeleton that turns the architecture into compiling structure lives in
+[`ios/`](./ios/). It's split into a platform-agnostic, unit-tested core
+(`CrossfadeKit` — the conductor, data model, matching engine) and the iOS layer
+(`CrossfadeApp` — SwiftUI + a MusicKit adapter). See [`ios/README.md`](./ios/README.md).
+
 ## Documents in this folder
 
 1. **[`PRODUCT_SPEC.md`](./PRODUCT_SPEC.md)** — what we're building and for whom:
