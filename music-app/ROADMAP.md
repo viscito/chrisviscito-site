@@ -88,9 +88,13 @@ library, and plays it end-to-end in-app.
   the reconciliation on a schedule, reads sources via the token-service brokered
   endpoint, one-failure-isolated run reports, green test suite + runnable demo.
 
+- ✅ **Phase-1 API contract** — [`backend/api/openapi.yaml`](./backend/api/openapi.yaml):
+  a validated OpenAPI 3.1 spec for accounts, services (R5/R1), library (R4), search
+  (R3), playlists, import (R2), sync (R2), and per-listener playback resolution.
+
 ## What I can produce next (pick any)
-- The **full Phase-1 API contract** (playlists, unified library, sync jobs) beyond
-  the token service.
+- **Implement** the API contract's un-built endpoints (playlists, library, search,
+  import, queue) as a service alongside the token-service.
 - Wire the **real MusicKit path** end-to-end (developer-token service + entitlement).
 - A **landing / waitlist page** to validate demand before building.
 - A deeper **Apple Music integration spec** (exact endpoints, token-signing

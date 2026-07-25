@@ -11,6 +11,14 @@ store (see [`../ARCHITECTURE.md`](../ARCHITECTURE.md)).
   signing), vends what MusicKit needs to the app, stores per-user tokens securely,
   and generalizes to a per-service credential broker (Spotify next).
 
+## API contract
+
+- **[`api/`](./api/)** — the full Phase-1 API as an **OpenAPI 3.1** contract
+  ([`api/openapi.yaml`](./api/openapi.yaml), validated): accounts, services (R5/R1),
+  unified library (R4), cross-platform search (R3), playlists, import (R2), sync
+  (R2), and per-listener playback resolution. The token-service and sync-worker
+  implement parts of it today. See [`api/README.md`](./api/README.md).
+
 ## Implementation
 
 - **[`token-service/`](./token-service/)** — a working TypeScript BFF implementing
