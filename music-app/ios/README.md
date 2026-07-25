@@ -11,6 +11,7 @@ ios/
 │       ├── Playback/     TrackRef, PlaybackAdapter (protocol), PlaybackCoordinator (the conductor)
 │       ├── Services/     MusicServiceClient (protocol) + DTOs
 │       ├── Matching/     MatchingEngine (ISRC-first, fuzzy fallback)
+│       ├── Sync/         PlaylistSyncEngine + UnifiedTrackCatalog (R2)
 │       ├── Catalog/      SupportedServices (the R5 registry)
 │       └── Mock/         MockData, MockPlaybackAdapter
 │   └── Tests/            MatchingEngineTests, PlaybackCoordinatorTests
@@ -35,7 +36,7 @@ ARCHITECTURE.md §4, made real.
 | Req | In code |
 |---|---|
 | **R1** provider requirements | `ServiceConnection.canPlay`, `PlaybackAdapter.playabilityBlock`, coordinator skip logic, `SettingsView` |
-| **R2** import, kept in sync | `Playlist.importedFrom` / `PlaylistSource.lastSyncedAt`, `ImportView` |
+| **R2** import, kept in sync | `Playlist.importedFrom`, `PlaylistSyncEngine` + `UnifiedTrackCatalog` (`Sync/`), `ImportView` |
 | **R3** cross-platform search | `MusicServiceClient.search`, `MatchingEngine.unify`, `SearchView` |
 | **R4** provider on every track | `TrackRef.service`, `ProviderBadge`, `TrackRow` |
 | **R5** supported-services browser | `SupportedServices` registry, `SupportedServicesView` |
@@ -65,7 +66,9 @@ with no entitlements. To try real Apple Music playback:
 
 - `AppleMusicAdapter` end-of-track detection polls player state; production should
   also observe `queue.currentEntry`.
-- The kept-in-sync reconciliation engine (R2) is modeled in the data types but not
-  yet implemented — it's Phase-2 work per the roadmap.
+- `PlaylistSyncEngine` implements the R2 reconciliation (source-authoritative for
+  imported items, preserving user-added `.local` items). It is one-way with local
+  preservation; true two-way sync / conflict resolution is still future work. The
+  scheduling that *drives* sync runs (backend job) is specced but not built here.
 - Views are functional, not final visual design — the [prototype](../prototype/)
   is the source of truth for look and feel.

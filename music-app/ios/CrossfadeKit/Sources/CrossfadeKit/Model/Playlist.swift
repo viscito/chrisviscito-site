@@ -15,17 +15,31 @@ public struct PlaylistSource: Codable, Hashable, Sendable {
     }
 }
 
+/// How a playlist item got here. The sync engine mirrors `.imported` items to the
+/// source while leaving `.local` (user-added) items untouched (R2).
+public enum PlaylistItemOrigin: String, Codable, Sendable {
+    case imported   // came from the synced source playlist
+    case local      // the user added this in Crossfade
+}
+
 /// One entry in a playlist. References a `UnifiedTrack`, so it can resolve to any
 /// service the listener has connected.
 public struct PlaylistItem: Identifiable, Codable, Hashable, Sendable {
     public let id: UUID
     public let unifiedTrackID: UUID
+    public var origin: PlaylistItemOrigin
     /// Optional pin: "always play this one from Apple Music".
     public var preferredService: ServiceID?
 
-    public init(id: UUID = UUID(), unifiedTrackID: UUID, preferredService: ServiceID? = nil) {
+    public init(
+        id: UUID = UUID(),
+        unifiedTrackID: UUID,
+        origin: PlaylistItemOrigin = .local,
+        preferredService: ServiceID? = nil
+    ) {
         self.id = id
         self.unifiedTrackID = unifiedTrackID
+        self.origin = origin
         self.preferredService = preferredService
     }
 }

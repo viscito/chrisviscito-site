@@ -35,7 +35,7 @@ public enum MockData {
 
     public static let playlists: [Playlist] = [
         Playlist(title: "Late Night Drive", detail: "18 songs",
-                 items: [midnightSignal, neonTide, slowHeadlights].map { PlaylistItem(unifiedTrackID: $0.id) },
+                 items: [midnightSignal, neonTide, slowHeadlights].map { PlaylistItem(unifiedTrackID: $0.id, origin: .imported) },
                  importedFrom: PlaylistSource(service: .spotify, providerPlaylistID: "sp-pl-1", lastSyncedAt: Date())),
         Playlist(title: "Focus Flow", detail: "24 songs",
                  items: [PlaylistItem(unifiedTrackID: paperLanterns.id)])

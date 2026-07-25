@@ -81,10 +81,13 @@ library, and plays it end-to-end in-app.
   storage, and the general credential-broker interface.
 - ✅ **Token service implementation** — [`backend/token-service/`](./backend/token-service/):
   a working TypeScript BFF (Hono + jose), green test suite, real Apple call path.
+- ✅ **R2 kept-in-sync engine** — `PlaylistSyncEngine` + `UnifiedTrackCatalog` in
+  `CrossfadeKit` (`Sync/`): source-authoritative reconciliation of imported items
+  with local-item preservation, ISRC de-dup, and a unit-test suite.
 
 ## What I can produce next (pick any)
-
-- Implement the **kept-in-sync reconciliation engine** (R2) in `CrossfadeKit`.
+- The **sync job runner** that *drives* `PlaylistSyncEngine` on a schedule (backend
+  worker + the brokered library reads already in the token service).
 - The **full Phase-1 API contract** (playlists, unified library, sync jobs) beyond
   the token service.
 - Wire the **real MusicKit path** end-to-end (developer-token service + entitlement).
