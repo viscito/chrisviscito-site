@@ -29,6 +29,10 @@ store (see [`../ARCHITECTURE.md`](../ARCHITECTURE.md)).
   reconciliation on a schedule, reading each imported playlist's source via the
   token-service's brokered reads. Green suite (reconcile parity with the Swift
   engine, runner behavior, HTTP reader). See [`sync-worker/README.md`](./sync-worker/README.md).
+- **[`api-service/`](./api-service/)** — implements the rest of the contract:
+  services (R5), unified library (R4), cross-platform search (R3), playlists +
+  items, import (R2), sync (R2), and the per-listener playback queue (R1). Green
+  suite + runnable demo. See [`api-service/README.md`](./api-service/README.md).
 
 ## Not yet specced (roadmap)
 

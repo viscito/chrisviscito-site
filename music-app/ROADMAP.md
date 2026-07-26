@@ -92,9 +92,13 @@ library, and plays it end-to-end in-app.
   a validated OpenAPI 3.1 spec for accounts, services (R5/R1), library (R4), search
   (R3), playlists, import (R2), sync (R2), and per-listener playback resolution.
 
+- ✅ **API service** — [`backend/api-service/`](./backend/api-service/): implements
+  the contract's remaining endpoints (services, library, search, playlists, items,
+  import, sync, and the per-listener playback queue), green suite + runnable demo.
+
 ## What I can produce next (pick any)
-- **Implement** the API contract's un-built endpoints (playlists, library, search,
-  import, queue) as a service alongside the token-service.
+- Wire the services together for real: `api-service` + `sync-worker` calling the
+  `token-service` brokered reads (replace the mock gateway), behind Postgres.
 - Wire the **real MusicKit path** end-to-end (developer-token service + entitlement).
 - A **landing / waitlist page** to validate demand before building.
 - A deeper **Apple Music integration spec** (exact endpoints, token-signing
