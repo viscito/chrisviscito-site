@@ -1206,7 +1206,7 @@ section:first-of-type{border-top:none;}
         -->
       </div>
 
-      <form class="contact-form reveal" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+      <form class="contact-form reveal" id="contactForm" action="https://api.web3forms.com/submit" method="POST" data-clarity-mask="true">
         <input type="hidden" name="access_key" value="a8ef5564-5486-4556-9b24-434777e920dd">
         <input type="hidden" name="subject" value="New inquiry from chrisviscito.com">
         <input type="hidden" name="from_name" value="chrisviscito.com contact form">
@@ -1497,7 +1497,7 @@ section:first-of-type{border-top:none;}
     }
 
     var captchaField = form.querySelector('textarea[name="h-captcha-response"]');
-    if (captchaField && !captchaField.value){
+    if (!captchaField || !captchaField.value){
       status.textContent = 'Please complete the captcha before sending.';
       status.className = 'form-status show err';
       return;
